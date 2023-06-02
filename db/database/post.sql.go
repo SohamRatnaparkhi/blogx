@@ -9,14 +9,15 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 const createPost = `-- name: CreatePost :one
 
 INSERT into
-    posts (id, user_id, title, body)
-VALUES ($1, $2, $3, $4)
-RETURNING id, user_id, title, body, likes, view, created_at, updated_at
+    posts (id, user_id, title, body, tags)
+VALUES ($1, $2, $3, $4, $5)
+RETURNING id, user_id, title, body, likes, view, tags, created_at, updated_at
 `
 
 type CreatePostParams struct {
@@ -24,6 +25,7 @@ type CreatePostParams struct {
 	UserID uuid.UUID
 	Title  string
 	Body   string
+	Tags   []string
 }
 
 func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, error) {
@@ -32,6 +34,7 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 		arg.UserID,
 		arg.Title,
 		arg.Body,
+		pq.Array(arg.Tags),
 	)
 	var i Post
 	err := row.Scan(
@@ -41,6 +44,7 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 		&i.Body,
 		&i.Likes,
 		&i.View,
+		pq.Array(&i.Tags),
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
