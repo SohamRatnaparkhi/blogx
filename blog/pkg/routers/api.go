@@ -11,8 +11,8 @@ func SetAllRouters() chi.Router {
 
 	apiRouter.Get("/", server.HealthCheck)
 
-	blogRouter := SetAuthRouter()
-	apiRouter.Mount("/auth", blogRouter)
+	blogRouter := SetBlogRouter()
+	apiRouter.Mount("/blogs", blogRouter)
 
 	return apiRouter
 }
