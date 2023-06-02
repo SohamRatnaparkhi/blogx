@@ -22,7 +22,7 @@ func MapPost(post database.Post) PostMap {
 		Body:     post.Body,
 		AuthorID: post.UserID,
 		Tags:     post.Tags,
-		Views:    post.View,
+		Views:    post.Views,
 		Likes:    post.Likes,
 	}
 }

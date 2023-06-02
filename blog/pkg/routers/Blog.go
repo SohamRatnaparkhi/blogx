@@ -1,12 +1,15 @@
 package routers
 
 import (
-	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/handlers/server"
+	posts "github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg/handlers/post"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg/handlers/server"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg/middleware"
 	"github.com/go-chi/chi"
 )
 
-func SetAuthRouter() chi.Router {
+func SetBlogRouter() chi.Router {
 	var blogRouter = chi.NewRouter()
 	blogRouter.Get("/", server.HealthCheck)
+	blogRouter.Post("/addBlog", middleware.Auth(middleware.AuthHandler(posts.CreatePostHandler)))
 	return blogRouter
 }

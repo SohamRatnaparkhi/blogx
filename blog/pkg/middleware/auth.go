@@ -41,7 +41,7 @@ func Auth(handler AuthHandler) http.HandlerFunc {
 				return
 			}
 
-			fmt.Println("No valid jwt")
+			fmt.Println("No valid jwt - " + tknStr)
 			utils.ErrorResponse(w, http.StatusUnauthorized, err)
 			return
 		}
