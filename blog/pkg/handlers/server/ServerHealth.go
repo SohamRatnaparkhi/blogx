@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg/utils"
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db"
 )
 
 func HealthCheck(res http.ResponseWriter, _ *http.Request) {
-	databaseObject := db.DbClient
+	databaseObject := pkg.DbClient
 	if databaseObject == nil {
 		utils.ErrorResponse(res, http.StatusInternalServerError, fmt.Errorf("database error"))
 		return
