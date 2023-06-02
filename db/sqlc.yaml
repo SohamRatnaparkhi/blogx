@@ -1,0 +1,8 @@
+version: "2"
+sql:
+  - schema: "pkg/schema"
+    queries: "pkg/queries"
+    engine: "postgresql"
+    gen:
+      go:
+        out: "internal/database"
