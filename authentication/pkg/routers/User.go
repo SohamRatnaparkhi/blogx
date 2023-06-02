@@ -13,5 +13,6 @@ func SetAuthRouter() chi.Router {
 	authRouter.Post("/register", users.HandleRegisterUser)
 	authRouter.Post("/login", users.HandleLoginUser)
 	authRouter.Post("/logout", middleware.Auth(middleware.AuthHandler(users.HandleUserLogout)))
+	authRouter.Post("/delete", middleware.Auth(middleware.AuthHandler(users.DeleteUser)))
 	return authRouter
 }
