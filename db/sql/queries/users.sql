@@ -12,20 +12,6 @@ INSERT INTO
 VALUES ($1, $2, $3, $4, $5, $6)
 RETURNING *;
 
--- name: UpdateUser :one
+-- name: GetUserByEmail :one
 
-UPDATE
-    users (
-        first_name,
-        last_name,
-        password,
-        email,
-        bio
-    )
-SET ($2, $3, $4, $5, $6)
-WHERE id = $1
-RETURNING *;
-
--- name: DeleteUser :exec
-
-DELETE FROM users WHERE id = $1;
+SELECT * FROM users WHERE email = $1;
