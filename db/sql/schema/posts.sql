@@ -6,6 +6,7 @@ CREATE TABLE
         body TEXT NOT NULL,
         PRIMARY KEY(id),
         likes INT NOT NULL DEFAULT 0,
+        view INT NOT NULL DEFAULT 0,
         FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
