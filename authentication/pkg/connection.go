@@ -1,4 +1,4 @@
-package db
+package pkg
 
 import (
 	"database/sql"
@@ -18,8 +18,10 @@ func DbInstance() *database.Queries {
 		log.Fatal("Error loading .env file")
 	}
 	db_url := os.Getenv("DB_URL")
+	if db_url == "" {
+		log.Fatal("DB_URL not found in .env file")
+	}
 
-	// fmt.Println(db_url)
 	db, dbErr := sql.Open("postgres", db_url)
 
 	if dbErr != nil {
