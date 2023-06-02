@@ -17,6 +17,7 @@ type Post struct {
 	Title     string
 	Body      string
 	Likes     int32
+	View      int32
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
