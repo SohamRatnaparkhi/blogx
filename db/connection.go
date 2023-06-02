@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/SohamRatnaparkhi/go-blog-server/internal/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/db/internal/database"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-func DbInstance() (*database.Queries, error) {
+func DbInstance() *database.Queries {
 	//database connection
 	err := godotenv.Load(".env")
 
@@ -23,10 +23,10 @@ func DbInstance() (*database.Queries, error) {
 	db, dbErr := sql.Open("postgres", db_url)
 
 	if dbErr != nil {
-		return nil, dbErr
+		return nil
 	}
 	dbQueries := database.New(db)
-	return dbQueries, dbErr
+	return dbQueries
 }
 
-var DbClient, err *database.Queries = DbInstance()
+var DbClient *database.Queries = DbInstance()
