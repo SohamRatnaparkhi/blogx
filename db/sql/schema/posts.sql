@@ -6,7 +6,7 @@ CREATE TABLE
         body TEXT NOT NULL,
         PRIMARY KEY(id),
         likes INT NOT NULL DEFAULT 0,
-        view INT NOT NULL DEFAULT 0,
+        views INT NOT NULL DEFAULT 0,
         tags text [] NOT NULL DEFAULT '{}',
         created_at TIMESTAMP NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()

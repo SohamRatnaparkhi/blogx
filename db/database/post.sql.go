@@ -17,7 +17,7 @@ const createPost = `-- name: CreatePost :one
 INSERT into
     posts (id, user_id, title, body, tags)
 VALUES ($1, $2, $3, $4, $5)
-RETURNING id, user_id, title, body, likes, view, tags, created_at, updated_at
+RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
 `
 
 type CreatePostParams struct {
@@ -43,7 +43,7 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 		&i.Title,
 		&i.Body,
 		&i.Likes,
-		&i.View,
+		&i.Views,
 		pq.Array(&i.Tags),
 		&i.CreatedAt,
 		&i.UpdatedAt,
