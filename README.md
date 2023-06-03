@@ -2,11 +2,12 @@
 
 Microservice based backend for a micro-blogging platform.
 
-It has three services:
+It has 4 services:
 
-1. Authentication - deals with user authentication
-2. blog - deals with creating, updating, deleting a blog, and some blog related functions
-3. feed - deals with showing the blogs on feed
+1. Authentication
+2. blog
+3. feed
+4. user
 
 Click below to run this API service in postman
 
