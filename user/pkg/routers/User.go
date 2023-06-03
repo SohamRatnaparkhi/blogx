@@ -11,5 +11,7 @@ func SetUserRouter() chi.Router {
 	var userRouter = chi.NewRouter()
 	userRouter.Get("/", server.HealthCheck)
 	userRouter.Delete("/delete", middleware.Auth(middleware.AuthHandler(users.DeleteUser)))
+	userRouter.Post("/follow", middleware.Auth(middleware.AuthHandler(users.FollowUser)))
+	userRouter.Post("/unfollow", middleware.Auth(middleware.AuthHandler(users.UnFollowUser)))
 	return userRouter
 }
