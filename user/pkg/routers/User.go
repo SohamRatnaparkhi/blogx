@@ -10,6 +10,6 @@ import (
 func SetUserRouter() chi.Router {
 	var userRouter = chi.NewRouter()
 	userRouter.Get("/", server.HealthCheck)
-	userRouter.Post("/delete", middleware.Auth(middleware.AuthHandler(users.DeleteUser)))
+	userRouter.Delete("/delete", middleware.Auth(middleware.AuthHandler(users.DeleteUser)))
 	return userRouter
 }

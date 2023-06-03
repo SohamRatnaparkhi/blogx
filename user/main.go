@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg/handlers/server"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg/routers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
@@ -32,6 +33,10 @@ func main() {
 	v1Router := chi.NewRouter()
 	router.Mount("/v1", v1Router)
 	v1Router.Get("/health", server.HealthCheck)
+
+	apiRouter := routers.SetAllRouters()
+
+	v1Router.Mount("/api", apiRouter)
 
 	fmt.Printf("\nUser server starting at http://localhost:%v\n", PORT)
 
