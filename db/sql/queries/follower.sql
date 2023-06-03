@@ -6,7 +6,7 @@ VALUES ($1, $2) ON CONFLICT (user_id, follower_id)
 DO NOTHING
 RETURNING *;
 
--- nqm3: UnfollowUser :one
+-- name: UnfollowUser :one
 
 DELETE FROM user_followers
 WHERE

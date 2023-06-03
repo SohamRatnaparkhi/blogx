@@ -31,3 +31,24 @@ func (q *Queries) FollowUser(ctx context.Context, arg FollowUserParams) (UserFol
 	err := row.Scan(&i.UserID, &i.FollowerID)
 	return i, err
 }
+
+const unfollowUser = `-- name: UnfollowUser :one
+
+DELETE FROM user_followers
+WHERE
+    user_id = $1
+    AND follower_id = $2
+RETURNING user_id, follower_id
+`
+
+type UnfollowUserParams struct {
+	UserID     uuid.UUID
+	FollowerID uuid.UUID
+}
+
+func (q *Queries) UnfollowUser(ctx context.Context, arg UnfollowUserParams) (UserFollower, error) {
+	row := q.db.QueryRowContext(ctx, unfollowUser, arg.UserID, arg.FollowerID)
+	var i UserFollower
+	err := row.Scan(&i.UserID, &i.FollowerID)
+	return i, err
+}
