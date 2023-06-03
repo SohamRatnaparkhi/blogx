@@ -45,6 +45,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Printf("Server started at PORT %v", PORT)
 }
