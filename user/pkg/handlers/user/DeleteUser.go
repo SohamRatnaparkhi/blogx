@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
@@ -11,9 +10,6 @@ import (
 )
 
 func DeleteUser(w http.ResponseWriter, req *http.Request, user database.User) {
-	if !user.Isadmin {
-		utils.ErrorResponse(w, http.StatusUnauthorized, fmt.Errorf("only admins can delete a user"))
-	}
 	apiConfig := pkg.DbClient
 	user_id := req.URL.Query().Get("user_id")
 	user_uuid, parseErr := uuid.Parse(user_id)
