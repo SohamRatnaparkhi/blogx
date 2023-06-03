@@ -1,8 +1,8 @@
 package routers
 
 import (
+	auth "github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/handlers/auth"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/handlers/server"
-	users "github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/handlers/user"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/middleware"
 	"github.com/go-chi/chi"
 )
@@ -10,9 +10,8 @@ import (
 func SetAuthRouter() chi.Router {
 	var authRouter = chi.NewRouter()
 	authRouter.Get("/", server.HealthCheck)
-	authRouter.Post("/register", users.HandleRegisterUser)
-	authRouter.Post("/login", users.HandleLoginUser)
-	authRouter.Post("/logout", middleware.Auth(middleware.AuthHandler(users.HandleUserLogout)))
-	authRouter.Post("/delete", middleware.Auth(middleware.AuthHandler(users.DeleteUser)))
+	authRouter.Post("/register", auth.HandleRegisterUser)
+	authRouter.Post("/login", auth.HandleLoginUser)
+	authRouter.Post("/logout", middleware.Auth(middleware.AuthHandler(auth.HandleUserLogout)))
 	return authRouter
 }
