@@ -1,4 +1,4 @@
-package all_posts
+package feed
 
 import (
 	"net/http"
