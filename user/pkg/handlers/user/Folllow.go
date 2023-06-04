@@ -18,8 +18,8 @@ func FollowUser(w http.ResponseWriter, req *http.Request, user database.User) {
 	}
 	apiConfig := pkg.DbClient
 	userFollowTuple, followerUpdateErr := apiConfig.FollowUser(req.Context(), database.FollowUserParams{
-		UserID:     uuid,
-		FollowerID: user.ID,
+		FollowingID: uuid,
+		FollowerID:  user.ID,
 	})
 	if followerUpdateErr != nil {
 		utils.ErrorResponse(w, http.StatusInternalServerError, followerUpdateErr)
@@ -37,8 +37,8 @@ func UnFollowUser(w http.ResponseWriter, req *http.Request, user database.User) 
 	}
 	apiConfig := pkg.DbClient
 	userFollowTuple, followerUpdateErr := apiConfig.UnfollowUser(req.Context(), database.UnfollowUserParams{
-		UserID:     user.ID,
-		FollowerID: uuid,
+		FollowingID: uuid,
+		FollowerID:  user.ID,
 	})
 	if followerUpdateErr != nil {
 		utils.ErrorResponse(w, http.StatusInternalServerError, followerUpdateErr)
