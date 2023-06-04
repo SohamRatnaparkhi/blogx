@@ -15,9 +15,20 @@ Click below to run this API service in postman
 
 ## Authentication service
 
-| endpoint  | method | Success status<br />code | Requires auth_token<br />in cookies? |
-| --------- | ------ | ------------------------ | ------------------------------------ |
-| /         | GET    | 200                      | NO                                   |
-| /register | POST   | 201                      | NO                                   |
-| /login    | POST   | 200                      | NO                                   |
-| /logout   | POST   | 202                      | YES                                  |
+| endpoint  | method | success status<br />code | auth token<br />requirement |
+| --------- | ------ | ------------------------ | --------------------------- |
+| /         | GET    | 200                      | NO                          |
+| /register | POST   | 201                      | NO                          |
+| /login    | POST   | 200                      | NO                          |
+| /logout   | POST   | 202                      | YES                         |
+
+---
+
+## User service
+
+| endpoint              | method | success status<br />code | auth token<br />requirement |
+| --------------------- | ------ | ------------------------ | --------------------------- |
+| /                     | GET    | 200                      | NO                          |
+| /delete               | DELETE | 204                      | YES                         |
+| /follow?toFollowId=   | POST   | 200                      | YES                         |
+| /unfollow?toFollowId= | POST   | 200                      | YES                         |
