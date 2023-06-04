@@ -13,5 +13,7 @@ func SetBlogRouter() chi.Router {
 	blogRouter.Post("/addBlog", middleware.Auth(middleware.AuthHandler(posts.CreatePostHandler)))
 	blogRouter.Patch("/updateBlog", middleware.Auth(middleware.AuthHandler(posts.UpdatePostHandler)))
 	blogRouter.Delete("/deleteBlog", middleware.Auth(middleware.AuthHandler(posts.DeletePostHandler)))
+	blogRouter.Get("/like", middleware.Auth(middleware.AuthHandler(posts.HandlePostLike)))
+	blogRouter.Get("/dislike", middleware.Auth(middleware.AuthHandler(posts.HandlePostDislike)))
 	return blogRouter
 }
