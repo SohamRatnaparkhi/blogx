@@ -15,6 +15,8 @@ func SetFeedRouter() chi.Router {
 	feedRouter.Get("/postWithId", middleware.Auth(middleware.AuthHandler(feed.GetPostWithPostId)))
 	feedRouter.Get("/myPosts", middleware.Auth(middleware.AuthHandler(feed.GetMyPosts)))
 	feedRouter.Get("/postWithUserId", middleware.Auth(middleware.AuthHandler(feed.GetPostWithPostId)))
+	feedRouter.Get("/followingUsersPosts", middleware.Auth(middleware.AuthHandler(feed.PostsOfUsersIFollow)))
+	feedRouter.Get("/myLikedPosts", middleware.Auth(middleware.AuthHandler(feed.PostsILiked)))
 
 	return feedRouter
 }
