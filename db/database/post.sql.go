@@ -16,8 +16,7 @@ const createPost = `-- name: CreatePost :one
 
 INSERT into
     posts (id, user_id, title, body, tags)
-VALUES ($1, $2, $3, $4, $5)
-RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+VALUES ($1, $2, $3, $4, $5) RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
 `
 
 type CreatePostParams struct {
@@ -32,6 +31,55 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 	row := q.db.QueryRowContext(ctx, createPost,
 		arg.ID,
 		arg.UserID,
+		arg.Title,
+		arg.Body,
+		pq.Array(arg.Tags),
+	)
+	var i Post
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Title,
+		&i.Body,
+		&i.Likes,
+		&i.Views,
+		pq.Array(&i.Tags),
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const deletePost = `-- name: DeletePost :exec
+
+DELETE FROM posts WHERE id = $1
+`
+
+func (q *Queries) DeletePost(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, deletePost, id)
+	return err
+}
+
+const updatePost = `-- name: UpdatePost :one
+
+UPDATE posts
+SET
+    title = $2,
+    body = $3,
+    tags = $4
+WHERE id = $1 RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+`
+
+type UpdatePostParams struct {
+	ID    uuid.UUID
+	Title string
+	Body  string
+	Tags  []string
+}
+
+func (q *Queries) UpdatePost(ctx context.Context, arg UpdatePostParams) (Post, error) {
+	row := q.db.QueryRowContext(ctx, updatePost,
+		arg.ID,
 		arg.Title,
 		arg.Body,
 		pq.Array(arg.Tags),
