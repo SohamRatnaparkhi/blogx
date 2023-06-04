@@ -20,6 +20,10 @@ SELECT * FROM posts WHERE id = $1;
 
 SELECT * FROM posts WHERE user_id = $1 ORDER BY created_at DESC;
 
+-- name: UpdatePostViews :one
+
+UPDATE posts SET views = views + 1 WHERE id = $1 RETURNING *;
+
 -- name: GetPostsByUserIdPageWise :many
 
 SELECT *

@@ -12,6 +12,9 @@ func SetFeedRouter() chi.Router {
 	feedRouter.Get("/", server.HealthCheck)
 	feedRouter.Get("/allPosts", middleware.Auth(middleware.AuthHandler(feed.AllPostNoPage)))
 	feedRouter.Get("/allPostsPageWise", middleware.Auth(middleware.AuthHandler(feed.AllPostWithPage)))
+	feedRouter.Get("/postWithId", middleware.Auth(middleware.AuthHandler(feed.GetPostWithPostId)))
+	feedRouter.Get("/myPosts", middleware.Auth(middleware.AuthHandler(feed.GetMyPosts)))
+	feedRouter.Get("/postWithUserId", middleware.Auth(middleware.AuthHandler(feed.GetPostWithPostId)))
 
 	return feedRouter
 }

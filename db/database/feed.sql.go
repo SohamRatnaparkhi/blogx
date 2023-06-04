@@ -341,3 +341,25 @@ func (q *Queries) GetPostsOfFollowers(ctx context.Context, followerID uuid.UUID)
 	}
 	return items, nil
 }
+
+const updatePostViews = `-- name: UpdatePostViews :one
+
+UPDATE posts SET views = views + 1 WHERE id = $1 RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+`
+
+func (q *Queries) UpdatePostViews(ctx context.Context, id uuid.UUID) (Post, error) {
+	row := q.db.QueryRowContext(ctx, updatePostViews, id)
+	var i Post
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Title,
+		&i.Body,
+		&i.Likes,
+		&i.Views,
+		pq.Array(&i.Tags),
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
