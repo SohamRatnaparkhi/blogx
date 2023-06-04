@@ -26,12 +26,29 @@ Click below to run this API service in postman
 
 ## Blog service
 
-| endpoint    | method | success status<br />code | auth token<br />requirement |
-| ----------- | ------ | ------------------------ | --------------------------- |
-| /           | GET    | 200                      | NO                          |
-| /addPost    | POST   | 200                      | YES                         |
-| /updateBlog | PATCH  | 200                      | YES                         |
-| /deleteBlog | DELETE | 204                      | YES                         |
+| endpoint          | endpoint | success status<br />code | auth token<br />requirement |
+| ----------------- | -------- | ------------------------ | --------------------------- |
+| /                 | GET      | 200                      | NO                          |
+| /addPost          | POST     | 200                      | YES                         |
+| /updateBlog       | PATCH    | 200                      | YES                         |
+| /deleteBlog       | DELETE   | 204                      | YES                         |
+| /like?post_id=    | GET      | 200                      | YES                         |
+| /dislike?post_id= | GET      | 200                      | YES                         |
+
+---
+
+## Feed service
+
+| endpoint                   | method | success status<br />code | auth token<br />requirement |
+| -------------------------- | ------ | ------------------------ | --------------------------- |
+| /                          | GET    | 200                      | NO                          |
+| /allPosts                  | GET    | 200                      | YES                         |
+| /allPostsPageWise?page_no= | GET    | 200                      | YES                         |
+| /postWithId?post_id=       | GET    | 200                      | YES                         |
+| /postWithUserId"?user_id=  | GET    | 200                      | YES                         |
+| /myPosts                   | GET    | 200                      | YES                         |
+| /followingUsersPosts       | GET    | 200                      | YES                         |
+| /myLikedPosts              | GET    | 200                      | YES                         |
 
 ---
 
