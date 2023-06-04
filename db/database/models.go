@@ -36,8 +36,8 @@ type User struct {
 }
 
 type UserFollower struct {
-	UserID     uuid.UUID
-	FollowerID uuid.UUID
+	FollowerID  uuid.UUID
+	FollowingID uuid.UUID
 }
 
 type UserLike struct {

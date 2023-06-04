@@ -18,8 +18,8 @@ func FollowUser(w http.ResponseWriter, req *http.Request, user database.User) {
 	}
 	apiConfig := pkg.DbClient
 	userFollowTuple, followerUpdateErr := apiConfig.FollowUser(req.Context(), database.FollowUserParams{
-		UserID:     user.ID,
-		FollowerID: uuid,
+		UserID:     uuid,
+		FollowerID: user.ID,
 	})
 	if followerUpdateErr != nil {
 		utils.ErrorResponse(w, http.StatusInternalServerError, followerUpdateErr)

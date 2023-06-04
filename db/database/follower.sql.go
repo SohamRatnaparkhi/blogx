@@ -14,21 +14,21 @@ import (
 const followUser = `-- name: FollowUser :one
 
 INSERT into
-    user_followers (user_id, follower_id)
-VALUES ($1, $2) ON CONFLICT (user_id, follower_id)
+    user_followers (follower_id, following_id)
+VALUES ($1, $2) ON CONFLICT (following_id, follower_id)
 DO NOTHING
-RETURNING user_id, follower_id
+RETURNING follower_id, following_id
 `
 
 type FollowUserParams struct {
-	UserID     uuid.UUID
-	FollowerID uuid.UUID
+	FollowerID  uuid.UUID
+	FollowingID uuid.UUID
 }
 
 func (q *Queries) FollowUser(ctx context.Context, arg FollowUserParams) (UserFollower, error) {
-	row := q.db.QueryRowContext(ctx, followUser, arg.UserID, arg.FollowerID)
+	row := q.db.QueryRowContext(ctx, followUser, arg.FollowerID, arg.FollowingID)
 	var i UserFollower
-	err := row.Scan(&i.UserID, &i.FollowerID)
+	err := row.Scan(&i.FollowerID, &i.FollowingID)
 	return i, err
 }
 
@@ -36,19 +36,19 @@ const unfollowUser = `-- name: UnfollowUser :one
 
 DELETE FROM user_followers
 WHERE
-    user_id = $1
-    AND follower_id = $2
-RETURNING user_id, follower_id
+    follower_id = $1
+    AND following_id = $2
+RETURNING follower_id, following_id
 `
 
 type UnfollowUserParams struct {
-	UserID     uuid.UUID
-	FollowerID uuid.UUID
+	FollowerID  uuid.UUID
+	FollowingID uuid.UUID
 }
 
 func (q *Queries) UnfollowUser(ctx context.Context, arg UnfollowUserParams) (UserFollower, error) {
-	row := q.db.QueryRowContext(ctx, unfollowUser, arg.UserID, arg.FollowerID)
+	row := q.db.QueryRowContext(ctx, unfollowUser, arg.FollowerID, arg.FollowingID)
 	var i UserFollower
-	err := row.Scan(&i.UserID, &i.FollowerID)
+	err := row.Scan(&i.FollowerID, &i.FollowingID)
 	return i, err
 }
