@@ -53,6 +53,7 @@ func HandleLoginUser(w http.ResponseWriter, req *http.Request) {
 		Name:    "auth_token",
 		Value:   jwtToken,
 		Expires: expiryTime,
+		Path:    "/",
 	})
 
 	// go utils.SendMail(user.Email, fmt.Sprintf("Some on logged in to your account at %v", time.Now()), "Login Verification")

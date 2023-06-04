@@ -85,6 +85,7 @@ func HandleRegisterUser(w http.ResponseWriter, req *http.Request) {
 		Name:    "auth_token",
 		Value:   token,
 		Expires: expiryTime,
+		Path:    "/",
 	})
 
 	utils.ResponseJson(w, http.StatusCreated, utils.MapRegisteredUser(user))

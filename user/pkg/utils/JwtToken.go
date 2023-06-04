@@ -90,5 +90,6 @@ func RefreshJwt(w http.ResponseWriter, r *http.Request) {
 		Name:    "auth_token",
 		Value:   tokenString,
 		Expires: expirationTime,
+		Path:    "/",
 	})
 }

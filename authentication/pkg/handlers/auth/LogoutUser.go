@@ -13,6 +13,7 @@ func HandleUserLogout(w http.ResponseWriter, req *http.Request, user database.Us
 	http.SetCookie(w, &http.Cookie{
 		Name:  "auth_token",
 		Value: "",
+		Path:  "/",
 	})
 	utils.ResponseJson(w, http.StatusAccepted, user)
 }
