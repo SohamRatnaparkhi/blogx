@@ -24,6 +24,19 @@ Click below to run this API service in postman
 
 ---
 
+## Blog service
+
+| endpoint | method | success status<br />code | auth token<br />requirement |
+| -------- | ------ | ------------------------ | --------------------------- |
+| /        | GET    | 200                      | NO                          |
+| /addPost | POST   | 200                      | YES                         |
+|          |        |                          |                             |
+|          |        |                          |                             |
+
+---
+
+
+
 ## User service
 
 | endpoint              | method | success status<br />code | auth token<br />requirement |
