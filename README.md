@@ -39,9 +39,9 @@ Click below to run this API service in postman
 
 ## User service
 
-| endpoint              | method | success status<br />code | auth token<br />requirement |
-| --------------------- | ------ | ------------------------ | --------------------------- |
-| /                     | GET    | 200                      | NO                          |
-| /delete               | DELETE | 204                      | YES                         |
-| /follow?toFollowId=   | POST   | 200                      | YES                         |
-| /unfollow?toFollowId= | POST   | 200                      | YES                         |
+| endpoint                | method | success status<br />code | auth token<br />requirement |
+| ----------------------- | ------ | ------------------------ | --------------------------- |
+| /                       | GET    | 200                      | NO                          |
+| /delete                 | DELETE | 204                      | YES                         |
+| /follow?toFollowId=     | POST   | 200                      | YES                         |
+| /unfollow?toUnfollowId= | POST   | 200                      | YES                         |

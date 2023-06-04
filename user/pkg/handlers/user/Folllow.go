@@ -29,7 +29,7 @@ func FollowUser(w http.ResponseWriter, req *http.Request, user database.User) {
 }
 
 func UnFollowUser(w http.ResponseWriter, req *http.Request, user database.User) {
-	uuid_param := req.URL.Query().Get("toFollowId")
+	uuid_param := req.URL.Query().Get("toUnfollowId")
 	uuid, paramParseErr := uuid.Parse(uuid_param)
 	if paramParseErr != nil {
 		utils.ErrorResponse(w, http.StatusInternalServerError, paramParseErr)
