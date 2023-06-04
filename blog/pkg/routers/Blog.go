@@ -11,5 +11,6 @@ func SetBlogRouter() chi.Router {
 	var blogRouter = chi.NewRouter()
 	blogRouter.Get("/", server.HealthCheck)
 	blogRouter.Post("/addBlog", middleware.Auth(middleware.AuthHandler(posts.CreatePostHandler)))
+	blogRouter.Patch("/updateBlog", middleware.Auth(middleware.AuthHandler(posts.UpdatePostHandler)))
 	return blogRouter
 }
