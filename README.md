@@ -29,7 +29,7 @@ Click below to run this API service in postman
 | endpoint          | endpoint | success status<br />code | auth token<br />requirement |
 | ----------------- | -------- | ------------------------ | --------------------------- |
 | /                 | GET      | 200                      | NO                          |
-| /addPost          | POST     | 200                      | YES                         |
+| /addBlog          | POST     | 200                      | YES                         |
 | /updateBlog       | PATCH    | 200                      | YES                         |
 | /deleteBlog       | DELETE   | 204                      | YES                         |
 | /like?post_id=    | GET      | 200                      | YES                         |
