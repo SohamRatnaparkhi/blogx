@@ -45,7 +45,7 @@ Click below to run this API service in postman
 | /allPosts                  | GET    | 200                      | YES                         |
 | /allPostsPageWise?page_no= | GET    | 200                      | YES                         |
 | /postWithId?post_id=       | GET    | 200                      | YES                         |
-| /postWithUserId"?user_id=  | GET    | 200                      | YES                         |
+| /postWithUserId?user_id=  | GET    | 200                      | YES                         |
 | /myPosts                   | GET    | 200                      | YES                         |
 | /followingUsersPosts       | GET    | 200                      | YES                         |
 | /myLikedPosts              | GET    | 200                      | YES                         |
