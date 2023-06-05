@@ -60,3 +60,14 @@ Click below to run this API service in postman
 | /delete                 | DELETE | 204                      | YES                         |
 | /follow?toFollowId=     | POST   | 200                      | YES                         |
 | /unfollow?toUnfollowId= | POST   | 200                      | YES                         |
+
+---
+
+> As this is the first version of this backend, each service endpoint is preceded by `/v1/api`
+
+---
+
+## Schema
+
+![image](https://github.com/SohamRatnaparkhi/blogx-backend-go/assets/92905626/8cda3809-23ab-498a-a9ac-4572638d9cfd)
+[Database-diagram](https://drawsql.app/teams/soham-ratnaparkhi/diagrams/blog-app)
