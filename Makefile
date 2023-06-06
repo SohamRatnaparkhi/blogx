@@ -31,12 +31,32 @@ docker-run-all:
 		--link db \
 		api-auth:v1
 
+	docker run -d \
+	--name blog \
+	--network my-network \
+	-e POSTGRES_PASSWORD=foobarbaz \
+	-e DB_HOST=db \
+	-e DB_PORT=5432 \
+	-e DB_USER=postgres \
+	-e DB_PASSWORD=foobarbaz \
+	-e DB_NAME=blogx \
+	-e PORT=8081 \
+	-e JWT_SECRET_KEY=foobarbaz \
+	-e BCRYPT_SALT_VALUE=12 \
+	-e DB_URL="postgres://postgres:foobarbaz@db:5432/blogx?sslmode=disable" \
+	-p 8081:8081 \
+	--restart unless-stopped \
+	--link db \
+	api-blog:v1
+
 .PHONY: docker-stop-all
 docker-stop-all:
 	docker stop db 
 	docker stop auth
+	docker stop blog
 
 .PHONY: docker-rm-all
 docker-rm-all:
 	docker rm auth
 	docker rm db 
+	docker rm blog
