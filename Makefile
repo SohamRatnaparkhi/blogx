@@ -33,10 +33,10 @@ docker-run-all:
 
 .PHONY: docker-stop-all
 docker-stop-all:
-	docker stop db auth
-	docker stop db auth
+	docker stop db 
+	docker stop auth
 
 .PHONY: docker-rm-all
 docker-rm-all:
-	docker rm db auth
-	docker rm db auth
+	docker rm auth
+	docker rm db 
