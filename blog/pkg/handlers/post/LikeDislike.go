@@ -17,7 +17,7 @@ func HandlePostLike(w http.ResponseWriter, req *http.Request, user database.User
 		return
 	}
 	apiConfig := pkg.DbClient
-	tuple, err := apiConfig.LikePost(req.Context(), database.LikePostParams{
+	_, err := apiConfig.LikePost(req.Context(), database.LikePostParams{
 		UserID: user.ID,
 		PostID: post_uuid,
 	})
@@ -25,7 +25,12 @@ func HandlePostLike(w http.ResponseWriter, req *http.Request, user database.User
 		utils.ErrorResponse(w, http.StatusInternalServerError, err)
 		return
 	}
-	utils.ResponseJson(w, http.StatusOK, tuple)
+	post, err2 := apiConfig.IncreasePostLikes(req.Context(), post_uuid)
+	if err2 != nil {
+		utils.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	utils.ResponseJson(w, http.StatusOK, post)
 }
 func HandlePostDislike(w http.ResponseWriter, req *http.Request, user database.User) {
 	post_id_string := req.URL.Query().Get("post_id")
@@ -35,7 +40,7 @@ func HandlePostDislike(w http.ResponseWriter, req *http.Request, user database.U
 		return
 	}
 	apiConfig := pkg.DbClient
-	tuple, err := apiConfig.DisLikePost(req.Context(), database.DisLikePostParams{
+	_, err := apiConfig.DisLikePost(req.Context(), database.DisLikePostParams{
 		UserID: user.ID,
 		PostID: post_uuid,
 	})
@@ -43,5 +48,10 @@ func HandlePostDislike(w http.ResponseWriter, req *http.Request, user database.U
 		utils.ErrorResponse(w, http.StatusInternalServerError, err)
 		return
 	}
-	utils.ResponseJson(w, http.StatusOK, tuple)
+	post, err2 := apiConfig.DecreasePostLikes(req.Context(), post_uuid)
+	if err2 != nil {
+		utils.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	utils.ResponseJson(w, http.StatusOK, post)
 }

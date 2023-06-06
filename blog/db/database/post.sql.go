@@ -16,8 +16,7 @@ const createPost = `-- name: CreatePost :one
 
 INSERT into
     posts (id, user_id, title, body, tags)
-VALUES ($1, $2, $3, $4, $5)
-RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+VALUES ($1, $2, $3, $4, $5) RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
 `
 
 type CreatePostParams struct {
@@ -51,6 +50,28 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 	return i, err
 }
 
+const decreasePostLikes = `-- name: DecreasePostLikes :one
+
+UPDATE posts SET likes = likes - 1 WHERE id = $1 RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+`
+
+func (q *Queries) DecreasePostLikes(ctx context.Context, id uuid.UUID) (Post, error) {
+	row := q.db.QueryRowContext(ctx, decreasePostLikes, id)
+	var i Post
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Title,
+		&i.Body,
+		&i.Likes,
+		&i.Views,
+		pq.Array(&i.Tags),
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const deletePost = `-- name: DeletePost :exec
 
 DELETE FROM posts WHERE id = $1
@@ -64,8 +85,9 @@ func (q *Queries) DeletePost(ctx context.Context, id uuid.UUID) error {
 const disLikePost = `-- name: DisLikePost :one
 
 DELETE FROM user_likes
-WHERE post_id = $1 AND user_id = $2
-RETURNING user_id, post_id
+WHERE
+    post_id = $1
+    AND user_id = $2 RETURNING user_id, post_id
 `
 
 type DisLikePostParams struct {
@@ -77,6 +99,28 @@ func (q *Queries) DisLikePost(ctx context.Context, arg DisLikePostParams) (UserL
 	row := q.db.QueryRowContext(ctx, disLikePost, arg.PostID, arg.UserID)
 	var i UserLike
 	err := row.Scan(&i.UserID, &i.PostID)
+	return i, err
+}
+
+const increasePostLikes = `-- name: IncreasePostLikes :one
+
+UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+`
+
+func (q *Queries) IncreasePostLikes(ctx context.Context, id uuid.UUID) (Post, error) {
+	row := q.db.QueryRowContext(ctx, increasePostLikes, id)
+	var i Post
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Title,
+		&i.Body,
+		&i.Likes,
+		&i.Views,
+		pq.Array(&i.Tags),
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
 	return i, err
 }
 
@@ -104,8 +148,7 @@ SET
     title = $2,
     body = $3,
     tags = $4
-WHERE id = $1
-RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
+WHERE id = $1 RETURNING id, user_id, title, body, likes, views, tags, created_at, updated_at
 `
 
 type UpdatePostParams struct {
