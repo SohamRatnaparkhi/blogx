@@ -2,14 +2,19 @@
 
 Microservice based backend for a micro-blogging platform.
 
-It has 4 services:
+It offers four distinct API services that collectively enable various functionalities:
 
-1. Authentication
-2. blog
-3. feed
-4. user
+- Authentication: This service facilitates essential operations such as user `login`, `logout`, and `registration`, ensuring secure access to the platform.
 
-Click below to run this API service in postman
+- Blog: The Blog service provides features for managing blog-related activities. Users can `create`, `update`, and `delete` their blog posts. Additionally, they have the ability to `like` or `dislike` posts, promoting user engagement and feedback.
+
+- User: This service focuses on user-related interactions. It allows users to `follow` or `unfollow` other users, enabling social connections within the platform. Furthermore, users can `delete` their account if desired.
+
+- Feed: The Feed service is responsible for curating and displaying relevant content to users. It offers multiple options for customizing the feed, including displaying `all posts`, posts from `followed` authors, `liked` posts, posts by a specific user, or a `particular post`.
+
+
+
+Try this API service in postman. 
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/25118959-d0fe8b6b-4aac-46af-b5b1-b557f0be7064?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D25118959-d0fe8b6b-4aac-46af-b5b1-b557f0be7064%26entityType%3Dcollection%26workspaceId%3D572f4781-b67c-48e3-ae06-4fb3efc89053)
 
@@ -29,7 +34,7 @@ Click below to run this API service in postman
 | endpoint          | endpoint | success status<br />code | auth token<br />requirement |
 | ----------------- | -------- | ------------------------ | --------------------------- |
 | /                 | GET      | 200                      | NO                          |
-| /addPost          | POST     | 200                      | YES                         |
+| /addBlog          | POST     | 200                      | YES                         |
 | /updateBlog       | PATCH    | 200                      | YES                         |
 | /deleteBlog       | DELETE   | 204                      | YES                         |
 | /like?post_id=    | GET      | 200                      | YES                         |
