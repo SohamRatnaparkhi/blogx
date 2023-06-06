@@ -6,7 +6,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=foobarbaz
     volumes:
-      - 'pgdata:/var/lib/postgresql/data'
+      - 'pgdata3:/var/lib/postgresql/data'
+      - './db/init.sql:/docker-entrypoint-initdb.d/init.sql'
     ports:
       - '5432:5432'
     restart: unless-stopped
@@ -30,7 +31,7 @@ services:
     restart: unless-stopped
     links:
       - postgres
-    image: 'api-auth:v2'
+    image: 'api-auth'
     build:
       context: ./authentication/
       dockerfile: Dockerfile
@@ -53,7 +54,7 @@ services:
     restart: unless-stopped
     links:
       - postgres
-    image: 'api-blog:v2'
+    image: 'api-blog'
     build:
       context: ./blog/
       dockerfile: Dockerfile
@@ -76,7 +77,7 @@ services:
     restart: unless-stopped
     links:
       - postgres
-    image: 'api-feed:v2'
+    image: 'api-feed'
     build:
       context: ./feed/
       dockerfile: Dockerfile
@@ -99,12 +100,12 @@ services:
     restart: unless-stopped
     links:
       - postgres
-    image: 'api-user:v2'
+    image: 'api-user'
     build:
       context: ./user/
       dockerfile: Dockerfile
 volumes:
-  pgdata:
+  pgdata3:
 networks:
   my-network:
     driver: bridge
