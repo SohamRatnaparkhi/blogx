@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/user/db/database"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg/utils"
 	"github.com/golang-jwt/jwt/v5"
