@@ -30,10 +30,10 @@ services:
     restart: unless-stopped
     links:
       - postgres
-    image: 'api-auth:v1'
+    image: 'api-auth:v2'
     build:
-      context: .
-      dockerfile: ./authentication/Dockerfile
+      context: ./authentication/
+      dockerfile: Dockerfile
   api-blog:
     container_name: blog
     network_mode: my-network
@@ -53,10 +53,33 @@ services:
     restart: unless-stopped
     links:
       - postgres
-    image: 'api-blog:v1'
+    image: 'api-blog:v2'
     build:
-      context: .
-      dockerfile: ./blog/Dockerfile
+      context: ./blog/
+      dockerfile: Dockerfile
+  api-feed:
+    container_name: feed
+    network_mode: my-network
+    environment:
+      - POSTGRES_PASSWORD=foobarbaz
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=foobarbaz
+      - DB_NAME=blogx
+      - PORT=8082
+      - JWT_SECRET_KEY=blogx_secret_key
+      - BCRYPT_SALT_VALUE=12
+      - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx?sslmode=disable'
+    ports:
+      - '8082:8082'
+    restart: unless-stopped
+    links:
+      - postgres
+    image: 'api-feed:v2'
+    build:
+      context: ./feed/
+      dockerfile: Dockerfile
 volumes:
   pgdata:
 networks:
