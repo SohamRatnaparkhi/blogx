@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/db/database"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
