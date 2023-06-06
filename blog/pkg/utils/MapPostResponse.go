@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/db/database"
 	"github.com/google/uuid"
 )
 

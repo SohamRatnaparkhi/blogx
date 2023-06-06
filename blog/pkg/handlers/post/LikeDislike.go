@@ -3,9 +3,9 @@ package posts
 import (
 	"net/http"
 
+	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/db/database"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg/utils"
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
 	"github.com/google/uuid"
 )
 
