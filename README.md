@@ -13,7 +13,20 @@ Try this API service in postman.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/25118959-d0fe8b6b-4aac-46af-b5b1-b557f0be7064?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D25118959-d0fe8b6b-4aac-46af-b5b1-b557f0be7064%26entityType%3Dcollection%26workspaceId%3D572f4781-b67c-48e3-ae06-4fb3efc89053)
 
+## Local setup
+
+### Code-base setup
 To set this service locally, clone the repository and run - `docker compose up`
+### DB-Setup
+
+After running `docker compose up` :
+
+1. Open a new terminal and type `docker exec -it db bash`
+2. psql -U postgres
+3. CREATE DATABASE blogx;
+4. \c blogx
+5. Run the commands in init.sql in \db folder (copy and paste the contents of that file in terminal and hit enter)
+
 
 ## Authentication service
 
