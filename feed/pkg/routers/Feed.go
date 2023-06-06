@@ -1,9 +1,9 @@
 package routers
 
 import (
-	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/middleware"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/pkg/handlers/feed"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/pkg/handlers/server"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/pkg/middleware"
 	"github.com/go-chi/chi"
 )
 

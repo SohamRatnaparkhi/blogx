@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/handlers/server"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg/handlers/server"
 
 	"github.com/go-chi/chi"
 )
