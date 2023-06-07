@@ -1,4 +1,3 @@
-
 CREATE TABLE
     users (
         id UUID NOT NULL,
