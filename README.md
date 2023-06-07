@@ -28,7 +28,8 @@ Try this API service in postman.
 
 * Clone the repository to your local machine.
 * Open a terminal and navigate to the cloned repository.
-* Run the command docker compose up.
+* Create a network using the command `docker network create my-network`
+* Run the command `docker compose up`.
 
 > **Note**: The `docker compose up` command will automatically set up the database. However, if it fails, please refer to the "*DB-Setup*" section for further instructions.
 
