@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/db/database"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/pkg"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/feed/pkg/utils"
 )

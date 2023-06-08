@@ -1,0 +1,113 @@
+version: '3.9'
+services:
+  postgres:
+    container_name: db
+    network_mode: my-network
+    environment:
+      - POSTGRES_PASSWORD=foobarbaz
+      - POSTGRES_DB=blogx_db
+    volumes:
+      - 'pg_data_blogx:/var/lib/postgresql/data'
+      - './db/init.sql:/docker-entrypoint-initdb.d/init.sql'
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    image: 'postgres:15.1-alpine'
+  api-auth:
+    container_name: auth
+    network_mode: my-network
+    environment:
+      - POSTGRES_DB=blogx_db
+      - POSTGRES_PASSWORD=foobarbaz
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=foobarbaz
+      - DB_NAME=blogx_db
+      - PORT=8080
+      - JWT_SECRET_KEY=blogx_secret_key
+      - BCRYPT_SALT_VALUE=12
+      - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
+    links:
+      - postgres
+    image: 'api-auth'
+    build:
+      context: ./authentication/
+      dockerfile: Dockerfile
+  api-blog:
+    container_name: blog
+    network_mode: my-network
+    environment:
+      - POSTGRES_PASSWORD=foobarbaz
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=foobarbaz
+      - DB_NAME=blogx_db
+      - PORT=8081
+      - JWT_SECRET_KEY=blogx_secret_key
+      - BCRYPT_SALT_VALUE=12
+      - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
+    ports:
+      - '8081:8081'
+    restart: unless-stopped
+    links:
+      - postgres
+    image: 'api-blog'
+    build:
+      context: ./blog/
+      dockerfile: Dockerfile
+  api-feed:
+    container_name: feed
+    network_mode: my-network
+    environment:
+      - POSTGRES_PASSWORD=foobarbaz
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=foobarbaz
+      - DB_NAME=blogx_db
+      - PORT=8082
+      - JWT_SECRET_KEY=blogx_secret_key
+      - BCRYPT_SALT_VALUE=12
+      - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
+    ports:
+      - '8082:8082'
+    restart: unless-stopped
+    links:
+      - postgres
+    image: 'api-feed'
+    build:
+      context: ./feed/
+      dockerfile: Dockerfile
+  api-user:
+    container_name: user
+    network_mode: my-network
+    environment:
+      - POSTGRES_PASSWORD=foobarbaz
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=foobarbaz
+      - DB_NAME=blogx_db
+      - PORT=8083
+      - JWT_SECRET_KEY=blogx_secret_key
+      - BCRYPT_SALT_VALUE=12
+      - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
+    ports:
+      - '8083:8083'
+    restart: unless-stopped
+    links:
+      - postgres
+    image: 'api-user'
+    build:
+      context: ./user/
+      dockerfile: Dockerfile
+volumes:
+  pg_data_blogx:
+networks:
+  my-network:
+    driver: bridge

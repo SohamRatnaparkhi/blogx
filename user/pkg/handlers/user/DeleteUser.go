@@ -3,7 +3,7 @@ package users
 import (
 	"net/http"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/user/db/database"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/user/pkg/utils"
 )

@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/db/database"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"

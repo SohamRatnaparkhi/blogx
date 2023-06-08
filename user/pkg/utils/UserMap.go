@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/user/db/database"
 	"github.com/google/uuid"
 )
 
