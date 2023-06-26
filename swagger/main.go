@@ -1,22 +1,15 @@
 package main
 
 import (
-	"net/http"
+	_ "github.com/SohamRatnaparkhi/blogx-backend-go/swagger/docs"
 
-	"github.com/SohamRatnaparkhi/blogx-backend-go/swagger/utils"
-	"github.com/go-chi/chi"
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
-	router := chi.NewRouter()
-	v1Router := chi.NewRouter()
-	v1Router.Get("/health", func(w http.ResponseWriter, _ *http.Request) {
-		utils.ResponseJson(w, 200, struct {
-			Status string `json:"status"`
-		}{
-			Status: "OK",
-		})
-	})
-	router.Mount("/v1", v1Router)
-
+	r := gin.Default()
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.Run(":8084")
 }
