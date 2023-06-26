@@ -20,6 +20,15 @@ services:
       - '6379:6379'
     restart: unless-stopped
     image: 'redis:7-alpine'
+  haproxy:
+    container_name: haproxy
+    network_mode: my-network
+    ports:
+      - '80:80'
+    restart: unless-stopped
+    image: 'haproxy:2.4-alpine'
+    volumes:
+      - './haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
   api-auth:
     container_name: auth
     network_mode: my-network
