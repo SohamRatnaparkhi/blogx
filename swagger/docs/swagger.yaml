@@ -1,4 +1,112 @@
+definitions:
+  github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DBUserResponse:
+    properties:
+      bio:
+        $ref: '#/definitions/sql.NullString'
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+    type: object
+  github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DbUserFullSchema:
+    properties:
+      bio:
+        $ref: '#/definitions/sql.NullString'
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      is_admin:
+        type: boolean
+      last_name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  sql.NullString:
+    properties:
+      string:
+        type: string
+      valid:
+        description: Valid is true if String is not NULL
+        type: boolean
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login a user with email and password given in the body
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DBUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - authentication
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout a user
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DBUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a user with fist name, last name, email, password and
+        bio given in the body
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DbUserFullSchema'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - authentication
 swagger: "2.0"
