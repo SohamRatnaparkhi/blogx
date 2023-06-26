@@ -14,7 +14,6 @@ import (
 // @Tags authentication
 // @accept json
 // @produce json
-// @BasePath /v1/api
 // @success 202 {object} utils.DBUserResponse
 // @failure 400 {object} string
 // @failure 500 {object} string

@@ -22,7 +22,6 @@ import (
 // @Tags authentication
 // @accept json
 // @produce json
-// @BasePath /v1/api
 // @success 201 {object} utils.DbUserFullSchema
 // @failure 400 {object} string
 // @failure 500 {object} string

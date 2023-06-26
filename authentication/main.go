@@ -13,6 +13,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// @title Authentication server
+// @description This is the authentication server for blogx
+// @BasePath /v1/api
+// @host localhost:8080
 func main() {
 	godotenv.Load(".env")
 	PORT := os.Getenv("PORT")
