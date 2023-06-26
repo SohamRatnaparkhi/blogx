@@ -3,8 +3,10 @@ package posts
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/db/database"
+	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/db/redis"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg"
 	"github.com/SohamRatnaparkhi/blogx-backend-go/blog/pkg/utils"
 	"github.com/google/uuid"
@@ -28,6 +30,13 @@ func CreatePostHandler(w http.ResponseWriter, req *http.Request, user database.U
 		})
 		return
 	}
+
+	redisClient, err := redis.GetRedisClient()
+	if err != nil {
+		utils.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+
 	apiConfig := pkg.DbClient
 
 	post, dbErr2 := apiConfig.CreatePost(req.Context(), database.CreatePostParams{
@@ -43,6 +52,26 @@ func CreatePostHandler(w http.ResponseWriter, req *http.Request, user database.U
 		return
 	}
 
+	allBlogs, _ := redisClient.Get(req.Context(), "allBlogs").Result()
+	// if err != nil {
+	// 	utils.ErrorResponse(w, http.StatusInternalServerError, err)
+	// 	return
+	// }
+	// post to string
+	allBlogsJson, err := json.Marshal(&allBlogs)
+	if err != nil {
+		utils.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	postJson, err := json.Marshal(&post)
+	if err != nil {
+		utils.ErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	// append post to allBlogs
+	allBlogsJson = append(allBlogsJson, postJson...)
+	redisClient.Set(req.Context(), "allBlogs", string(allBlogsJson), 180*time.Second)
 	utils.ResponseJson(w, http.StatusOK, utils.MapPost(post))
 }
 

@@ -13,6 +13,13 @@ services:
       - '5432:5432'
     restart: unless-stopped
     image: 'postgres:15.1-alpine'
+  redis:
+    container_name: redis
+    network_mode: my-network
+    ports:
+      - '6379:6379'
+    restart: unless-stopped
+    image: 'redis:7-alpine'
   api-auth:
     container_name: auth
     network_mode: my-network
