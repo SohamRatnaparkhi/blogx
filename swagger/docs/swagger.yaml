@@ -1,3 +1,4 @@
+basePath: /v1/api
 definitions:
   github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DBUserResponse:
     properties:
@@ -31,6 +32,25 @@ definitions:
       updated_at:
         type: string
     type: object
+  github_com_SohamRatnaparkhi_blogx-backend-go_blog_pkg_utils.PostMap:
+    properties:
+      author_id:
+        type: string
+      body:
+        type: string
+      id:
+        type: string
+      likes:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      views:
+        type: integer
+    type: object
   sql.NullString:
     properties:
       string:
@@ -39,8 +59,11 @@ definitions:
         description: Valid is true if String is not NULL
         type: boolean
     type: object
+host: localhost:8080
 info:
   contact: {}
+  description: This is the authentication server for blogx
+  title: Authentication server
 paths:
   /auth/login:
     post:
@@ -109,4 +132,70 @@ paths:
             type: string
       tags:
       - authentication
+  /blogs/addBlog:
+    post:
+      consumes:
+      - application/json
+      description: Create a post with title, body and tags given in the body
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_pkg_utils.PostMap'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - posts
+  /blogs/deleteBlog:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a post with post id given in the body
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - posts
+  /blogs/likePost:
+    post:
+      consumes:
+      - application/json
+      description: Like a post with post id given as query parameter(post_id)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - posts
 swagger: "2.0"

@@ -9,6 +9,16 @@ import (
 	"github.com/google/uuid"
 )
 
+// @title Like a post
+// @version 1
+// @description Like a post with post id given as query parameter(post_id)
+// @Tags posts
+// @accept json
+// @produce json
+// @success 200 {object} string
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /blogs/likePost [post]
 func HandlePostLike(w http.ResponseWriter, req *http.Request, user database.User) {
 	post_id_string := req.URL.Query().Get("post_id")
 	post_uuid, typeCastError := uuid.Parse(post_id_string)
