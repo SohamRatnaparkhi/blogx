@@ -8,7 +8,7 @@ It offers four distinct API services that collectively enable various functional
 - **Blog**: The Blog service provides features for managing blog-related activities. Users can `create`, `update`, and `delete` their blog posts. Additionally, they have the ability to `like` or `dislike` posts, promoting user engagement and feedback.
 - **User**: This service focuses on user-related interactions. It allows users to `follow` or `unfollow` other users, enabling social connections within the platform. Furthermore, users can `delete` their account if desired.
 - **Feed**: The Feed service is responsible for curating and displaying relevant content to users. It offers multiple options for customizing the feed, including displaying `all posts`, posts from `followed` authors, `liked` posts, posts by a specific user, or a `particular post`.
-- **Swagger -** You can access the Swagger UI at `localhost:8084`
+- **Swagger -** You can access the Swagger UI at `localhost:8084/swagger/index.html`
 
 Try this API service in postman.
 
