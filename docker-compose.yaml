@@ -122,6 +122,16 @@ services:
     build:
       context: ./user/
       dockerfile: Dockerfile
+  swagger_ui:
+    container_name: swagger
+    network_mode: my-network
+    ports:
+      - '8084:8084'
+    restart: unless-stopped
+    image: 'swagger-ui'
+    build:
+      context: ./swagger/
+      dockerfile: Dockerfile
 volumes:
   pg_data_blogx:
 networks:
