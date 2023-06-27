@@ -96,6 +96,17 @@ const docTemplate = `{
                 "tags": [
                     "authentication"
                 ],
+                "parameters": [
+                    {
+                        "description": "User details",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_authentication_db_database.User"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -129,6 +140,17 @@ const docTemplate = `{
                 ],
                 "tags": [
                     "posts"
+                ],
+                "parameters": [
+                    {
+                        "description": "Post details",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.CreatePostParams"
+                        }
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -186,9 +208,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/blogs/likePost": {
-            "post": {
-                "description": "Like a post with post id given as query parameter(post_id)",
+        "/blogs/dislike": {
+            "get": {
+                "description": "dislike a post with post id given as query parameter(post_id)",
                 "consumes": [
                     "application/json"
                 ],
@@ -197,6 +219,15 @@ const docTemplate = `{
                 ],
                 "tags": [
                     "posts"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "query",
+                        "required": true
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -219,9 +250,129 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/blogs/like": {
+            "get": {
+                "description": "Like a post with post id given as query parameter(post_id)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "posts"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/blogs/updateBlog": {
+            "patch": {
+                "description": "Update a post with title, body and tags given in the body",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "posts"
+                ],
+                "parameters": [
+                    {
+                        "description": "Post details",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.UpdatePostParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_pkg_utils.PostMap"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "github_com_SohamRatnaparkhi_blogx-backend-go_authentication_db_database.User": {
+            "type": "object",
+            "properties": {
+                "bio": {
+                    "$ref": "#/definitions/sql.NullString"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isadmin": {
+                    "type": "boolean"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DBUserResponse": {
             "type": "object",
             "properties": {
@@ -267,6 +418,49 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.CreatePostParams": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.UpdatePostParams": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
                     "type": "string"
                 }
             }
@@ -318,7 +512,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "",
-	Host:             "localhost:8080",
+	Host:             "127.0.0.1:8000",
 	BasePath:         "/v1/api",
 	Schemes:          []string{},
 	Title:            "Authentication server",

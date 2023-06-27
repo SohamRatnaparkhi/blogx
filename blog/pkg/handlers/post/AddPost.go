@@ -18,6 +18,7 @@ import (
 // @Tags posts
 // @accept json
 // @produce json
+// @param data body database.CreatePostParams true "Post details"
 // @success 201 {object} utils.PostMap
 // @failure 400 {object} string
 // @failure 500 {object} string

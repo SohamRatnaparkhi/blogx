@@ -15,10 +15,11 @@ import (
 // @Tags posts
 // @accept json
 // @produce json
+// @param post_id query string true "Post ID"
 // @success 200 {object} string
 // @failure 400 {object} string
 // @failure 500 {object} string
-// @router /blogs/likePost [post]
+// @router /blogs/like [get]
 func HandlePostLike(w http.ResponseWriter, req *http.Request, user database.User) {
 	post_id_string := req.URL.Query().Get("post_id")
 	post_uuid, typeCastError := uuid.Parse(post_id_string)
@@ -42,6 +43,18 @@ func HandlePostLike(w http.ResponseWriter, req *http.Request, user database.User
 	}
 	utils.ResponseJson(w, http.StatusOK, post)
 }
+
+// @title dislike a post
+// @version 1
+// @description dislike a post with post id given as query parameter(post_id)
+// @Tags posts
+// @accept json
+// @produce json
+// @param post_id query string true "Post ID"
+// @success 200 {object} string
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /blogs/dislike [get]
 func HandlePostDislike(w http.ResponseWriter, req *http.Request, user database.User) {
 	post_id_string := req.URL.Query().Get("post_id")
 	post_uuid, typeCastError := uuid.Parse(post_id_string)

@@ -1,5 +1,26 @@
 basePath: /v1/api
 definitions:
+  github_com_SohamRatnaparkhi_blogx-backend-go_authentication_db_database.User:
+    properties:
+      bio:
+        $ref: '#/definitions/sql.NullString'
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: string
+      isadmin:
+        type: boolean
+      lastName:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        type: string
+    type: object
   github_com_SohamRatnaparkhi_blogx-backend-go_authentication_pkg_utils.DBUserResponse:
     properties:
       bio:
@@ -32,6 +53,34 @@ definitions:
       updated_at:
         type: string
     type: object
+  github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.CreatePostParams:
+    properties:
+      body:
+        type: string
+      id:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      userID:
+        type: string
+    type: object
+  github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.UpdatePostParams:
+    properties:
+      body:
+        type: string
+      id:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    type: object
   github_com_SohamRatnaparkhi_blogx-backend-go_blog_pkg_utils.PostMap:
     properties:
       author_id:
@@ -59,7 +108,7 @@ definitions:
         description: Valid is true if String is not NULL
         type: boolean
     type: object
-host: localhost:8080
+host: 127.0.0.1:8000
 info:
   contact: {}
   description: This is the authentication server for blogx
@@ -115,6 +164,13 @@ paths:
       - application/json
       description: Register a user with fist name, last name, email, password and
         bio given in the body
+      parameters:
+      - description: User details
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_authentication_db_database.User'
       produces:
       - application/json
       responses:
@@ -137,6 +193,13 @@ paths:
       consumes:
       - application/json
       description: Create a post with title, body and tags given in the body
+      parameters:
+      - description: Post details
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.CreatePostParams'
       produces:
       - application/json
       responses:
@@ -176,11 +239,17 @@ paths:
             type: string
       tags:
       - posts
-  /blogs/likePost:
-    post:
+  /blogs/dislike:
+    get:
       consumes:
       - application/json
-      description: Like a post with post id given as query parameter(post_id)
+      description: dislike a post with post id given as query parameter(post_id)
+      parameters:
+      - description: Post ID
+        in: query
+        name: post_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -188,6 +257,63 @@ paths:
           description: OK
           schema:
             type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - posts
+  /blogs/like:
+    get:
+      consumes:
+      - application/json
+      description: Like a post with post id given as query parameter(post_id)
+      parameters:
+      - description: Post ID
+        in: query
+        name: post_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - posts
+  /blogs/updateBlog:
+    patch:
+      consumes:
+      - application/json
+      description: Update a post with title, body and tags given in the body
+      parameters:
+      - description: Post details
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_db_database.UpdatePostParams'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_SohamRatnaparkhi_blogx-backend-go_blog_pkg_utils.PostMap'
         "400":
           description: Bad Request
           schema:

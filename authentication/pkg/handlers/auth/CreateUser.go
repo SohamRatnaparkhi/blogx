@@ -21,6 +21,7 @@ import (
 // @description Register a user with fist name, last name, email, password and bio given in the body
 // @Tags authentication
 // @accept json
+// @param data body database.User true "User details"
 // @produce json
 // @success 201 {object} utils.DbUserFullSchema
 // @failure 400 {object} string
