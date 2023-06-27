@@ -12,6 +12,17 @@ import (
 	"github.com/google/uuid"
 )
 
+// @title Create a post
+// @version 1
+// @description Create a post with title, body and tags given in the body
+// @Tags posts
+// @accept json
+// @produce json
+// @param data body database.CreatePostParams true "Post details"
+// @success 201 {object} utils.PostMap
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /blogs/addBlog [post]
 func CreatePostHandler(w http.ResponseWriter, req *http.Request, user database.User) {
 	type reqBody struct {
 		Title string
@@ -53,11 +64,6 @@ func CreatePostHandler(w http.ResponseWriter, req *http.Request, user database.U
 	}
 
 	allBlogs, _ := redisClient.Get(req.Context(), "allBlogs").Result()
-	// if err != nil {
-	// 	utils.ErrorResponse(w, http.StatusInternalServerError, err)
-	// 	return
-	// }
-	// post to string
 	allBlogsJson, err := json.Marshal(&allBlogs)
 	if err != nil {
 		utils.ErrorResponse(w, http.StatusInternalServerError, err)
@@ -74,11 +80,3 @@ func CreatePostHandler(w http.ResponseWriter, req *http.Request, user database.U
 	redisClient.Set(req.Context(), "allBlogs", string(allBlogsJson), 180*time.Second)
 	utils.ResponseJson(w, http.StatusOK, utils.MapPost(post))
 }
-
-/*
-testPostBody={
-	"title": "test post",
-	"body": "test post body",
-	"tags": ["test", "post"]
-}
-*/

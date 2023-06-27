@@ -16,6 +16,17 @@ import (
 	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/utils"
 )
 
+// @title Register a user
+// @version 1
+// @description Register a user with fist name, last name, email, password and bio given in the body
+// @Tags authentication
+// @accept json
+// @param data body database.User true "User details"
+// @produce json
+// @success 201 {object} utils.DbUserFullSchema
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /auth/register [post]
 func HandleRegisterUser(w http.ResponseWriter, req *http.Request) {
 	type reqBody struct {
 		FirstName string         `json:"first_name"`
@@ -90,19 +101,3 @@ func HandleRegisterUser(w http.ResponseWriter, req *http.Request) {
 
 	utils.ResponseJson(w, http.StatusCreated, utils.MapRegisteredUser(user))
 }
-
-/*
-
-register user body =
-{
-	"first_name": "Soham",
-	"last_name": "Ratnaparkhi",
-	"email": "soham.ratnaparkhi@gmail.com",
-	"password": "password",
-	"bio": {
-		"String": "I am a developer",
-		"Valid": true
-	}
-}
-
-*/

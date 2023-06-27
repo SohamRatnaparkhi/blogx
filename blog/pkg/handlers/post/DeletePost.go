@@ -10,6 +10,16 @@ import (
 	"github.com/google/uuid"
 )
 
+// @title Delete a post
+// @version 1
+// @description Delete a post with post id given in the body
+// @Tags posts
+// @accept json
+// @produce json
+// @success 204 {object} string
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /blogs/deleteBlog [delete]
 func DeletePostHandler(w http.ResponseWriter, req *http.Request, _ database.User) {
 	type reqBody struct {
 		PostId uuid.UUID `json:"post_id"`

@@ -10,6 +10,17 @@ import (
 	"github.com/google/uuid"
 )
 
+// @title Update a post
+// @version 1
+// @description Update a post with title, body and tags given in the body
+// @Tags posts
+// @accept json
+// @produce json
+// @param data body database.UpdatePostParams true "Post details"
+// @success 201 {object} utils.PostMap
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /blogs/updateBlog [patch]
 func UpdatePostHandler(w http.ResponseWriter, req *http.Request, _ database.User) {
 	type reqBody struct {
 		PostId uuid.UUID `json:"post_id"`
@@ -45,12 +56,3 @@ func UpdatePostHandler(w http.ResponseWriter, req *http.Request, _ database.User
 
 	utils.ResponseJson(w, http.StatusOK, utils.MapPost(post))
 }
-
-/*
-testPostBody={
-	"id": "some post uuid"
-	"title": "test post",
-	"body": "test post body",
-	"tags": ["test", "post"]
-}
-*/

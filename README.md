@@ -8,6 +8,7 @@ It offers four distinct API services that collectively enable various functional
 - **Blog**: The Blog service provides features for managing blog-related activities. Users can `create`, `update`, and `delete` their blog posts. Additionally, they have the ability to `like` or `dislike` posts, promoting user engagement and feedback.
 - **User**: This service focuses on user-related interactions. It allows users to `follow` or `unfollow` other users, enabling social connections within the platform. Furthermore, users can `delete` their account if desired.
 - **Feed**: The Feed service is responsible for curating and displaying relevant content to users. It offers multiple options for customizing the feed, including displaying `all posts`, posts from `followed` authors, `liked` posts, posts by a specific user, or a `particular post`.
+- **Swagger -** You can access the Swagger UI at `localhost:8084`
 
 Try this API service in postman.
 
@@ -118,6 +119,14 @@ Database used - PostgreSQL
 | -------------- | ----------------------------------------------------------------------------------------------------- |
 | users          | Stores the details of users. The password is not stored directly; it is hashed for security purposes. |
 | posts          | Stores the blog posts created by users.                                                               |
-| user_followers | Represents the relationship between users, where the `follower_id` follows the `following_id`.        |
+| user_followers | Represents the relationship between users, where the `follower_id` follows the `following_id`.    |
 | user_likes     | Records the likes given by users (user_id) to specific posts (post_id).                               |
 
+## Tools and Technologies used
+
+1. Go
+2. PostgreSQL
+3. Redis
+4. Docker and Docker-compose
+5. HAProxy (load-balancer)
+6. SwaggerUI

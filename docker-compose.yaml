@@ -20,7 +20,16 @@ services:
       - '6379:6379'
     restart: unless-stopped
     image: 'redis:7-alpine'
-  api-auth:
+  haproxy:
+    container_name: haproxy
+    network_mode: my-network
+    ports:
+      - '8000:80'
+    restart: unless-stopped
+    build:
+      context: ./haproxy/
+      dockerfile: Dockerfile
+  api_auth:
     container_name: auth
     network_mode: my-network
     environment:
@@ -44,7 +53,7 @@ services:
     build:
       context: ./authentication/
       dockerfile: Dockerfile
-  api-blog:
+  api_blog:
     container_name: blog
     network_mode: my-network
     environment:
@@ -67,7 +76,7 @@ services:
     build:
       context: ./blog/
       dockerfile: Dockerfile
-  api-feed:
+  api_feed:
     container_name: feed
     network_mode: my-network
     environment:
@@ -90,7 +99,7 @@ services:
     build:
       context: ./feed/
       dockerfile: Dockerfile
-  api-user:
+  api_user:
     container_name: user
     network_mode: my-network
     environment:
@@ -112,6 +121,16 @@ services:
     image: 'api-user'
     build:
       context: ./user/
+      dockerfile: Dockerfile
+  swagger_ui:
+    container_name: swagger
+    network_mode: my-network
+    ports:
+      - '8084:8084'
+    restart: unless-stopped
+    image: 'swagger-ui'
+    build:
+      context: ./swagger/
       dockerfile: Dockerfile
 volumes:
   pg_data_blogx:

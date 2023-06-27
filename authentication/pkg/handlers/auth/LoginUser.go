@@ -10,6 +10,16 @@ import (
 	"github.com/SohamRatnaparkhi/blogx-backend-go/authentication/pkg/utils"
 )
 
+// @title Login a user
+// @version 1
+// @description Login a user with email and password given in the body
+// @Tags authentication
+// @accept json
+// @produce json
+// @success 200 {object} utils.DBUserResponse
+// @failure 400 {object} string
+// @failure 500 {object} string
+// @router /auth/login [post]
 func HandleLoginUser(w http.ResponseWriter, req *http.Request) {
 	type ReqBody struct {
 		Email    string `json:"email"`
