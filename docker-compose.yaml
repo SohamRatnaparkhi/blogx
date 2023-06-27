@@ -24,12 +24,12 @@ services:
     container_name: haproxy
     network_mode: my-network
     ports:
-      - '80:80'
+      - '8000:80'
     restart: unless-stopped
-    image: 'haproxy:2.4-alpine'
-    volumes:
-      - './haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg'
-  api-auth:
+    build:
+      context: ./haproxy/
+      dockerfile: Dockerfile
+  api_auth:
     container_name: auth
     network_mode: my-network
     environment:
@@ -53,7 +53,7 @@ services:
     build:
       context: ./authentication/
       dockerfile: Dockerfile
-  api-blog:
+  api_blog:
     container_name: blog
     network_mode: my-network
     environment:
@@ -76,7 +76,7 @@ services:
     build:
       context: ./blog/
       dockerfile: Dockerfile
-  api-feed:
+  api_feed:
     container_name: feed
     network_mode: my-network
     environment:
@@ -99,7 +99,7 @@ services:
     build:
       context: ./feed/
       dockerfile: Dockerfile
-  api-user:
+  api_user:
     container_name: user
     network_mode: my-network
     environment:
