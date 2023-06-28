@@ -11,21 +11,21 @@ services:
       - './db/init.sql:/docker-entrypoint-initdb.d/init.sql'
     ports:
       - '5432:5432'
-    restart: unless-stopped
+    restart: always
     image: 'postgres:15.1-alpine'
   redis:
     container_name: redis
     network_mode: my-network
     ports:
       - '6379:6379'
-    restart: unless-stopped
+    restart: always
     image: 'redis:7-alpine'
   haproxy:
     container_name: haproxy
     network_mode: my-network
     ports:
       - '8000:80'
-    restart: unless-stopped
+    restart: always
     build:
       context: ./haproxy/
       dockerfile: Dockerfile
@@ -46,7 +46,7 @@ services:
       - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
     ports:
       - '8080:8080'
-    restart: unless-stopped
+    restart: always
     links:
       - postgres
     image: 'api-auth'
@@ -69,7 +69,7 @@ services:
       - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
     ports:
       - '8081:8081'
-    restart: unless-stopped
+    restart: always
     links:
       - postgres
     image: 'api-blog'
@@ -92,7 +92,7 @@ services:
       - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
     ports:
       - '8082:8082'
-    restart: unless-stopped
+    restart: always
     links:
       - postgres
     image: 'api-feed'
@@ -115,7 +115,7 @@ services:
       - 'DB_URL=postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable'
     ports:
       - '8083:8083'
-    restart: unless-stopped
+    restart: always
     links:
       - postgres
     image: 'api-user'
@@ -127,7 +127,7 @@ services:
     network_mode: my-network
     ports:
       - '8084:8084'
-    restart: unless-stopped
+    restart: always
     image: 'swagger-ui'
     build:
       context: ./swagger/
