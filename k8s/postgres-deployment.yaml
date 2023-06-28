@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yaml
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose.yaml
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/blogx-backend-go-default: "true"
+        io.kompose.service: postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: blogx_db
+            - name: POSTGRES_PASSWORD
+              value: foobarbaz
+          image: postgres:15.1-alpine
+          name: db
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pg-data-blogx
+            - mountPath: /docker-entrypoint-initdb.d/init.sql
+              name: postgres-claim1
+      restartPolicy: Always
+      volumes:
+        - name: pg-data-blogx
+          persistentVolumeClaim:
+            claimName: pg-data-blogx
+        - name: postgres-claim1
+          persistentVolumeClaim:
+            claimName: postgres-claim1
+status: {}

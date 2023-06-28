@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yaml
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: api-auth
+  name: api-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: api-auth
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose.yaml
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/blogx-backend-go-default: "true"
+        io.kompose.service: api-auth
+    spec:
+      containers:
+        - env:
+            - name: BCRYPT_SALT_VALUE
+              value: "12"
+            - name: DB_HOST
+              value: db
+            - name: DB_NAME
+              value: blogx_db
+            - name: DB_PASSWORD
+              value: foobarbaz
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_URL
+              value: postgres://postgres:foobarbaz@db:5432/blogx_db?sslmode=disable
+            - name: DB_USER
+              value: postgres
+            - name: JWT_SECRET_KEY
+              value: blogx_secret_key
+            - name: PORT
+              value: "8080"
+            - name: POSTGRES_DB
+              value: blogx_db
+            - name: POSTGRES_PASSWORD
+              value: foobarbaz
+          image: api-auth
+          name: auth
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
