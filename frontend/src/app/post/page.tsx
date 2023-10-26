@@ -1,9 +1,12 @@
+import Form from '@/components/posts/Form'
 import React from 'react'
 
 const Feed = () => {
   return (
     <div>
-      post
+      <div className='py-5'>
+        <Form />
+      </div>
     </div>
   )
 }
