@@ -1,17 +1,26 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
 import { FaRegListAlt } from 'react-icons/fa'
 import { BiMoneyWithdraw } from 'react-icons/bi'
 import { AiOutlinePhone } from 'react-icons/ai'
 import { usePathname } from 'next/navigation'
-import { SidebarOptions } from '@/constants/sidebar.constants';
+import { SidebarOptions, SidebarMap } from '@/constants/sidebar.constants';
 import SidebarOption from './SidebarOptions';
 
 const Sidebar = () => {
-    const [selected, setSelected] = React.useState<string>("Home")
+
     const path = usePathname()
     const { items, routes } = SidebarOptions
+    const [selected, setSelected] = React.useState<string>(SidebarMap[path])
+    useEffect(() => {
+        if (path === "/") {
+            setSelected("Home")
+        }
+        if (path == undefined) {
+            setSelected("Home")
+        }
+    }, [path])
     if (routes.findIndex(item => item === path) === -1) {
         return (
             <div></div>
@@ -64,9 +73,6 @@ const Sidebar = () => {
                         redirect={routes[3]}
                     />
                     <hr />
-                </div>
-                <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded-2xl w-1/2 m-auto mt-10" >
-                    Logout
                 </div>
                 <div className={sidebarStyles.logout}>Logout</div>
             </div>
