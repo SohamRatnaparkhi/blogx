@@ -1,6 +1,6 @@
 "use client";
 
-import { handleBold, handleBoldItalics, handleHeadings, handleItalics, handlerLinks } from '@/utils/markdown';
+import { handleBold, handleBoldItalics, handleCodeBlock, handleHeadings, handleHighlight, handleItalics, handlerLinks } from '@/utils/markdown';
 import React, { useEffect, useRef, useState } from 'react'
 import { BiLink } from 'react-icons/bi';
 import { FaBold, FaItalic } from 'react-icons/fa';
@@ -17,8 +17,7 @@ const Form = () => {
     const [selected, setSelected] = useState<string>('')
     const [cursorStart, setCursorStart] = useState<number>(0)
     const [cursorEnd, setCursorEnd] = useState<number>(0)
-    const selectedTextRef = useRef<string>('');
-
+    const [htmlString, setHtmlString] = useState<string>('')
     const styles = {
         "markdownControllers": "border border-[#020617] bg-[#334155] p-2 m-2 rounded-sm"
     }
@@ -95,9 +94,17 @@ const Form = () => {
                             const link = prompt('Enter link')
                             handlerLinks(setBody, cursorStart, cursorEnd, link || "")
                         }}><BiLink /></div>
+                    <div className={styles.markdownControllers}
+                        onClick={() => {
+                            handleCodeBlock(setBody, cursorStart, cursorEnd)
+                        }}>{"{}"}</div>
+                    <div className={styles.markdownControllers}
+                        onClick={() => {
+                            handleHighlight(setBody, cursorStart, cursorEnd)
+                        }}>{"``"}</div>
                 </div>
                 <textarea ref={textArea} onChange={(e) => setBody(e.target.value)} value={body} id="large-input" className="block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-            </div> : <Output />}
+            </div> : <Output htmlString={htmlString} />}
         </div>
     )
 }

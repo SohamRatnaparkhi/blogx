@@ -34,3 +34,15 @@ export const handlerLinks = (setString: (arg0: (prev: string) => string) => void
         return prev.slice(0, cursorSelectStart) + "[" + prev.slice(cursorSelectStart, cursorSelectEnd) + "](" + link + ")" + prev.slice(cursorSelectEnd);
     });
 }
+
+export const handleCodeBlock = (setString: (arg0: (prev: string) => string) => void, cursorSelectStart: number, cursorSelectEnd: number) => {
+    setString((prev: string) => {
+        return prev.slice(0, cursorSelectStart) + "```" + prev.slice(cursorSelectStart, cursorSelectEnd) + "```" + prev.slice(cursorSelectEnd);
+    });
+}
+
+export const handleHighlight = (setString: (arg0: (prev: string) => string) => void, cursorSelectStart: number, cursorSelectEnd: number) => {
+    setString((prev: string) => {
+        return prev.slice(0, cursorSelectStart) + "`" + prev.slice(cursorSelectStart, cursorSelectEnd) + "`" + prev.slice(cursorSelectEnd);
+    });
+}
