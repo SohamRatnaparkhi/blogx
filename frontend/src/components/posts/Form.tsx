@@ -1,7 +1,7 @@
 "use client";
 
 import { handleBold, handleBoldItalics, handleCodeBlock, handleHeadings, handleHighlight, handleItalics, handlerLinks } from '@/utils/markdown';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { use, useEffect, useRef, useState } from 'react'
 import { BiLink } from 'react-icons/bi';
 import { FaBold, FaItalic } from 'react-icons/fa';
 import { LuHeading1, LuHeading2, LuHeading3, LuHeading4, LuHeading5, LuHeading6 } from 'react-icons/lu';
@@ -9,7 +9,6 @@ import Output from './Output';
 import Toggle from '../ui/Toggle';
 
 const Form = () => {
-    const textArea = useRef<HTMLTextAreaElement>(null)
     const [editorOn, setEditorOn] = useState<boolean>(true)
     const [title, setTitle] = useState<string>('')
     const [caption, setCaption] = useState<string>('')
@@ -18,24 +17,22 @@ const Form = () => {
     const [cursorStart, setCursorStart] = useState<number>(0)
     const [cursorEnd, setCursorEnd] = useState<number>(0)
     const [htmlString, setHtmlString] = useState<string>('')
+    const textArea = useRef<HTMLTextAreaElement>(null)
     const styles = {
         "markdownControllers": "border border-[#020617] bg-[#334155] p-2 m-2 rounded-sm"
     }
 
-    useEffect(() => {
-        const handleSelection = () => {
-            setCursorStart(textArea.current?.selectionStart || 0)
-            setCursorEnd(textArea.current?.selectionEnd || 0)
-        }
-        textArea.current?.addEventListener('select', handleSelection)
-        return () => {
-            textArea.current?.removeEventListener('select', handleSelection)
-        }
-    }, [])
+    const handleSelectionChange = () => {
+        const selectedText = textArea.current?.value.substring(
+            textArea.current?.selectionStart,
+            textArea.current?.selectionEnd
+        );
+        setCursorStart(textArea.current?.selectionStart || 0)
+        setCursorEnd(textArea.current?.selectionEnd || 0)
+        setSelected(selectedText || "");
+    };
+    console.log(cursorEnd, cursorStart, selected)
 
-    useEffect(() => {
-        setSelected(textArea.current?.value.substring(cursorStart, cursorEnd) || '')
-    }, [cursorEnd, cursorStart])
     return (
         <div>
             <div>
@@ -55,6 +52,7 @@ const Form = () => {
                 <div className='flex flex-row text-lg border bg-[#0f172a] border-[#1e293b] mb-4 justify-between'>
                     <div className={styles.markdownControllers}
                         onClick={() => {
+                            console.log(window.getSelection())
                             handleBold(setBody, cursorStart, cursorEnd)
                         }}><FaBold /></div>
                     <div className={styles.markdownControllers}
@@ -103,8 +101,8 @@ const Form = () => {
                             handleHighlight(setBody, cursorStart, cursorEnd)
                         }}>{"``"}</div>
                 </div>
-                <textarea ref={textArea} onChange={(e) => setBody(e.target.value)} value={body} id="large-input" className="block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-            </div> : <Output htmlString={htmlString} />}
+                <textarea ref={textArea} onSelect={handleSelectionChange} onChange={(e) => setBody(e.target.value)} value={body} id="large-input" className="block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+            </div> : <Output title={title} mdString={body} />}
         </div>
     )
 }
