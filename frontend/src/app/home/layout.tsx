@@ -1,3 +1,4 @@
+import Navbar from '@/components/ui/Navbar';
 import Sidebar from '@/components/ui/Sidebar';
 import React from 'react'
 
@@ -19,6 +20,9 @@ const layout = ({
     return (
         <html lang="en">
             <body>
+                <div>
+                    <Navbar />
+                </div>
                 <div className={styles.wrapper}>
                     <div className={styles.columns}>
                         <div className={styles.leftSide}>
