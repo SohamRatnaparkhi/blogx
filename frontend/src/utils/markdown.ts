@@ -46,3 +46,9 @@ export const handleHighlight = (setString: (arg0: (prev: string) => string) => v
         return prev.slice(0, cursorSelectStart) + "`" + prev.slice(cursorSelectStart, cursorSelectEnd) + "`" + prev.slice(cursorSelectEnd);
     });
 }
+
+export const handleNewLine = (setString: (arg0: (prev: string) => string) => void, cursorSelectStart: number) => {
+    setString((prev: string) => {
+        return prev.slice(0, cursorSelectStart) + "\n <br />\n" + prev.slice(cursorSelectStart);
+    });
+}

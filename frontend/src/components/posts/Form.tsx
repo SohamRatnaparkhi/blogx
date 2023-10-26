@@ -1,12 +1,13 @@
 "use client";
 
-import { handleBold, handleBoldItalics, handleCodeBlock, handleHeadings, handleHighlight, handleItalics, handlerLinks } from '@/utils/markdown';
+import { handleBold, handleBoldItalics, handleCodeBlock, handleHeadings, handleHighlight, handleItalics, handleNewLine, handlerLinks } from '@/utils/markdown';
 import React, { use, useEffect, useRef, useState } from 'react'
 import { BiLink } from 'react-icons/bi';
 import { FaBold, FaItalic } from 'react-icons/fa';
 import { LuHeading1, LuHeading2, LuHeading3, LuHeading4, LuHeading5, LuHeading6 } from 'react-icons/lu';
 import Output from './Output';
 import Toggle from '../ui/Toggle';
+import { AiOutlineEnter } from 'react-icons/ai';
 
 const Form = () => {
     const [editorOn, setEditorOn] = useState<boolean>(true)
@@ -21,6 +22,17 @@ const Form = () => {
     const styles = {
         "markdownControllers": "border border-[#020617] bg-[#334155] p-2 m-2 rounded-sm"
     }
+
+    useEffect(() => {
+        const unloadCallback = (event: any) => {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        };
+
+        window.addEventListener("beforeunload", unloadCallback);
+        return () => window.removeEventListener("beforeunload", unloadCallback);
+    }, []);
 
     const handleSelectionChange = () => {
         const selectedText = textArea.current?.value.substring(
@@ -100,8 +112,12 @@ const Form = () => {
                         onClick={() => {
                             handleHighlight(setBody, cursorStart, cursorEnd)
                         }}>{"``"}</div>
+                    <div className={styles.markdownControllers}
+                        onClick={() => {
+                            handleNewLine(setBody, cursorStart)
+                        }}><AiOutlineEnter /></div>
                 </div>
-                <textarea ref={textArea} onSelect={handleSelectionChange} onChange={(e) => setBody(e.target.value)} value={body} id="large-input" className="block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    <textarea ref={textArea} onSelect={handleSelectionChange} onChange={(e) => setBody(e.target.value)} value={body} id="large-input" className="block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div> : <Output title={title} mdString={body} />}
         </div>
     )
