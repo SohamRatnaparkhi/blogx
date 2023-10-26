@@ -5,15 +5,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import { BiLink } from 'react-icons/bi';
 import { FaBold, FaItalic } from 'react-icons/fa';
 import { LuHeading1, LuHeading2, LuHeading3, LuHeading4, LuHeading5, LuHeading6 } from 'react-icons/lu';
+import Output from './Output';
+import Toggle from '../ui/Toggle';
 
 const Form = () => {
+    const textArea = useRef<HTMLTextAreaElement>(null)
+    const [editorOn, setEditorOn] = useState<boolean>(true)
     const [title, setTitle] = useState<string>('')
     const [caption, setCaption] = useState<string>('')
     const [body, setBody] = useState<string>('')
     const [selected, setSelected] = useState<string>('')
-    const textArea = useRef<HTMLTextAreaElement>(null)
-    // let cursorStart = textArea.current?.selectionStart || 0;
-    // let cursorEnd = textArea.current?.selectionEnd || 0;
     const [cursorStart, setCursorStart] = useState<number>(0)
     const [cursorEnd, setCursorEnd] = useState<number>(0)
     const selectedTextRef = useRef<string>('');
@@ -48,56 +49,55 @@ const Form = () => {
                 <input onChange={(e) => setCaption(e.target.value)} type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
 
-            {/* markdown controllers */}
+            <Toggle onText="Editor" offText='Output' setOnState={setEditorOn} onState={editorOn} />
 
-
-            <div className={`mb-6 py-5`}>
+            {editorOn ? <div className={`mb-6 py-5`}>
                 <label htmlFor="large-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blog</label>
                 <div className='flex flex-row text-lg border bg-[#0f172a] border-[#1e293b] mb-4 justify-between'>
-                    <div className={styles.markdownControllers} 
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleBold(setBody, cursorStart, cursorEnd)
-                    }}><FaBold /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><FaBold /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleItalics(setBody, cursorStart, cursorEnd)
-                    }}><FaItalic /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><FaItalic /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleBoldItalics(setBody, cursorStart, cursorEnd)
-                    }}><strong><i>BI</i></strong></div>
-                    <div className={styles.markdownControllers} 
+                        }}><strong><i>BI</i></strong></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleHeadings(setBody, cursorStart, cursorEnd, 1)
-                    }}><LuHeading1 /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><LuHeading1 /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleHeadings(setBody, cursorStart, cursorEnd, 2)
-                    }}><LuHeading2 /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><LuHeading2 /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleHeadings(setBody, cursorStart, cursorEnd, 3)
-                    }}><LuHeading3 /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><LuHeading3 /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleHeadings(setBody, cursorStart, cursorEnd, 4)
-                    }}><LuHeading4 /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><LuHeading4 /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleHeadings(setBody, cursorStart, cursorEnd, 5)
-                    }}><LuHeading5 /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><LuHeading5 /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             handleHeadings(setBody, cursorStart, cursorEnd, 6)
-                    }}><LuHeading6 /></div>
-                    <div className={styles.markdownControllers} 
+                        }}><LuHeading6 /></div>
+                    <div className={styles.markdownControllers}
                         onClick={() => {
                             const link = prompt('Enter link')
                             handlerLinks(setBody, cursorStart, cursorEnd, link || "")
-                    }}><BiLink /></div>
+                        }}><BiLink /></div>
                 </div>
                 <textarea ref={textArea} onChange={(e) => setBody(e.target.value)} value={body} id="large-input" className="block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-            </div>
+            </div> : <Output />}
         </div>
     )
 }
