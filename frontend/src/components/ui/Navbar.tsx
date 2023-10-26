@@ -64,12 +64,8 @@ const Navbar = () => {
                     className="sm:flex w-screen"
                 >
                     <div className="text-xl text-center font-bold bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full w-40  sm:basis-1/3 my-2.5 mx-auto justify-center">
-                        <Link href="/blog/post" className="hidden lg:inline">Publish a Blog</Link>
-                        <Link href="/campaign" className="inline lg:hidden">Publish Blog</Link>
-                    </div>
-                    <div className="text-xl text-center font-bold bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full w-40  sm:basis-1/3 my-2.5 mx-auto justify-center">
-                        <Link href="/blog/campaign" className="hidden lg:inline">Raise funds</Link>
-                        <Link href="/blog/campaign" className="inline lg:hidden">Publish Blog</Link>
+                        <Link href="/post" className="hidden lg:inline">Publish a Blog</Link>
+                        <Link href="/post" className="inline lg:hidden">Publish Blog</Link>
                     </div>
                 </div>
                 <div className="hidden sm:flex p-4 basis-1/2 justify-between">

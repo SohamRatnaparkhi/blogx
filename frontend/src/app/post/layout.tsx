@@ -1,3 +1,4 @@
+import Widgets from '@/components/posts/Widgets';
 import Navbar from '@/components/ui/Navbar';
 import Sidebar from '@/components/ui/Sidebar';
 import React from 'react'
@@ -32,7 +33,7 @@ const layout = ({
                             {children}
                         </div>
                         <div className={styles.rightSide}>
-                            <Sidebar />
+                            <Widgets />
                         </div>
                     </div>
                 </div>

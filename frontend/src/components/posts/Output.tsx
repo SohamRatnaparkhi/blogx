@@ -6,19 +6,25 @@ import rehypeHighlight from 'rehype-highlight/lib';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings/lib';
 import 'highlight.js/styles/atom-one-dark.css';
-// import matter from 'gray-matter'
-// import html from 'remark-html'
-// import {remark} from 'remark'
+import { usePostStore } from '@/app/store/post.store';
+import matter from 'gray-matter'
+import html from 'remark-html'
+import {remark} from 'remark'
 
 const Output = ({ mdString, title }: { mdString: string, title: string }) => {
+    const postStore = usePostStore()
+    const setPostHtml = postStore.setPostHtml
     const [content, setContent] = useState<string>('<div></div>')
     const [content2, setContent2] = useState<any>(<div></div>)
     useEffect(() => {
         const processMarkdown = async () => {
-            // const content = matter(mdString).content
-            // const htmlContent = await remark().use(html).process(content)
-            // setContent(htmlContent.toString())
-            // console.log(htmlContent.toString())
+            const mdContent = matter(mdString).content
+            const htmlContent = await remark().use(html).process(mdContent)
+            const regex = /<pre><code class="([^"]+)">/g
+            const subst = '<pre><code class="hljs $1">'
+            const result = htmlContent.toString().replace(regex, subst)
+            console.log(result)
+            setContent(result)
 
             // -----------------------------  above code is working fine -----------------------------
 
@@ -38,17 +44,15 @@ const Output = ({ mdString, title }: { mdString: string, title: string }) => {
                     }
                 },
             })
-            console.log(content, frontmatter)
             setContent2(content)
+            setPostHtml(result)
         }
         processMarkdown()
     }, [mdString])
     return (
         <div className='markdown-body'>
             <div className='my-6 py-5 block w-full h-screen p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 overflow-y-auto'>
-                {/* <article dangerouslySetInnerHTML={{ __html: content }}>
-            </article> */}
-                <article>
+                <article className=''>
                     {content2}
                 </article>
             </div>

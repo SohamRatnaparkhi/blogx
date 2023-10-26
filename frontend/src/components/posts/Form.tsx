@@ -43,7 +43,6 @@ const Form = () => {
         setCursorEnd(textArea.current?.selectionEnd || 0)
         setSelected(selectedText || "");
     };
-    console.log(cursorEnd, cursorStart, selected)
 
     return (
         <div>

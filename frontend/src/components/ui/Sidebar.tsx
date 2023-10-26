@@ -32,11 +32,9 @@ const Sidebar = () => {
             "text-4xl font-bold py-4 hover:underline cursor-pointer font-normal hover:font-bold",
         option:
             "flex flex-col justify-center items-center py-2 hover:bg-slate-700 cursor-pointer mx-12 rounded-2xl",
-        publish:
-            "text-2xl font-bold py-4 hover: cursor-pointer font-normal hover:font-bold text-center bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-2xl w-1/2 m-auto mt-8",
         largerscreens: "sticky top-5",
         logout:
-            "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded-2xl w-1/2 m-auto mt-10",
+            "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded-2xl w-1/2 m-auto mt-10 text-center",
     };
     return (
         <div>
