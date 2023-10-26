@@ -12,6 +12,7 @@
     "axios": "^1.5.1",
     "gray-matter": "^4.0.3",
     "next": "13.5.5",
+    "next-mdx-remote": "^4.4.1",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
