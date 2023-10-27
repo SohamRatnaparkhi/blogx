@@ -38,14 +38,16 @@ type DBUserResponse struct {
 	LastName  string         `json:"last_name"`
 	Email     string         `json:"email"`
 	Bio       sql.NullString `json:"bio"`
+	Token     string         `json:"token"`
 }
 
-func MapLoginUser(dbUser database.User) DBUserResponse {
+func MapLoginUser(dbUser database.User, token string) DBUserResponse {
 	return DBUserResponse{
 		ID:        dbUser.ID,
 		FirstName: dbUser.FirstName,
 		LastName:  dbUser.LastName,
 		Email:     dbUser.Email,
 		Bio:       dbUser.Bio,
+		Token:     token,
 	}
 }

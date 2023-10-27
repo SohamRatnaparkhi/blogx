@@ -18,18 +18,13 @@ func Auth(handler AuthHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		godotenv.Load()
 		var jwtKey string = os.Getenv("JWT_SECRET_KEY")
-		jwtToken, err := req.Cookie("auth_token")
-
-		if err != nil {
-			if err == http.ErrNoCookie {
-				fmt.Println("No cookie")
-				utils.ErrorResponse(w, http.StatusUnauthorized, err)
-				return
-			}
-			utils.ErrorResponse(w, http.StatusUnauthorized, err)
+		jwtToken := req.Header.Get("auth_token")
+		if jwtToken == "" {
+			utils.ErrorResponse(w, http.StatusUnauthorized, fmt.Errorf("no auth token"))
+			fmt.Println("No auth token")
 			return
 		}
-		tknStr := jwtToken.Value
+		tknStr := jwtToken
 		claims := &utils.Claims{}
 
 		tkn, err := jwt.ParseWithClaims(tknStr, claims, func(token *jwt.Token) (interface{}, error) {
@@ -41,7 +36,7 @@ func Auth(handler AuthHandler) http.HandlerFunc {
 				return
 			}
 
-			fmt.Println("No valid jwt")
+			fmt.Println("No valid jwt - " + tknStr)
 			utils.ErrorResponse(w, http.StatusUnauthorized, err)
 			return
 		}
