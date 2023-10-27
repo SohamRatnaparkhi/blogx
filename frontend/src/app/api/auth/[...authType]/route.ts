@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { login, register } from "../handler";
+import { cookies } from 'next/headers'
 
 const request = async (request: NextRequest) => {
     const authType = request.url.split('/').reverse()[0];
@@ -7,6 +8,11 @@ const request = async (request: NextRequest) => {
     if (authType == 'login') {
         try {
             const {data, status, statusText} = await login(body)
+            const cookieStore = cookies()
+            cookieStore.set('auth_token', data.token, {
+                expires: new Date(Date.now() + 3000000),
+                path: '/',
+            })
             if (status - 400 < 0) {
                 return NextResponse.json({
                     user: data,

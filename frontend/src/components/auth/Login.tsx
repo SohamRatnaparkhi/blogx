@@ -19,7 +19,9 @@ const Login = () => {
     const Login = async () => {
         const { data } = await axios.post('/api/auth/login', { email, password });
         if (data?.status < 400) {
+            console.log(data)
             alert("Login successful");
+            localStorage.setItem('token', data.user.token);
             router.push('/home');
         }
         else {
