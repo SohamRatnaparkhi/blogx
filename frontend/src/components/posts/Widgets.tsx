@@ -6,9 +6,9 @@ import { usePostStore } from '@/app/store/post.store'
 
 const Widgets = () => {
     const postStore = usePostStore()
-    const postHtml = postStore.postHtml
+    const postMdx = postStore.postMdx
     const saveAsDraft = () => {
-        // localStorage.setItem('blog', postHtml)
+        localStorage.setItem('blog', postMdx)
         console.log(localStorage.getItem('blog'))
         console.log('save as draft')
     }

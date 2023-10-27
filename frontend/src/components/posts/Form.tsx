@@ -8,8 +8,11 @@ import { LuHeading1, LuHeading2, LuHeading3, LuHeading4, LuHeading5, LuHeading6 
 import Output from './Output';
 import Toggle from '../ui/Toggle';
 import { AiOutlineEnter } from 'react-icons/ai';
+import { usePostStore } from '@/app/store/post.store';
 
 const Form = () => {
+    const postStore = usePostStore()
+    const setPostMdx = postStore.setPostMdx
     const [editorOn, setEditorOn] = useState<boolean>(true)
     const [title, setTitle] = useState<string>('')
     const [caption, setCaption] = useState<string>('')
@@ -44,6 +47,10 @@ const Form = () => {
         setSelected(selectedText || "");
     };
 
+    useEffect(() => {
+        setPostMdx(body)
+    }, [body, setPostMdx])
+
     return (
         <div>
             <div>
@@ -52,7 +59,7 @@ const Form = () => {
             </div>
 
             <div className="mb-6 py-5">
-                <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Caption</label>
+                <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                 <input onChange={(e) => setCaption(e.target.value)} type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             </div>
 
