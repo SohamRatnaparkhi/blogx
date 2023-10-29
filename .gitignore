@@ -23,3 +23,8 @@ go.work
 *.env
 
 .vscode
+
+frontend/node_modules
+frontend/.next
+frontend/.env.local
+
