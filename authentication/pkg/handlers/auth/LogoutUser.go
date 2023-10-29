@@ -25,5 +25,5 @@ func HandleUserLogout(w http.ResponseWriter, _ *http.Request, user database.User
 		Value: "",
 		Path:  "/",
 	})
-	utils.ResponseJson(w, http.StatusAccepted, utils.MapLoginUser(user))
+	utils.ResponseJson(w, http.StatusAccepted, utils.MapLoginUser(user, ""))
 }

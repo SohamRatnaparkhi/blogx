@@ -68,5 +68,5 @@ func HandleLoginUser(w http.ResponseWriter, req *http.Request) {
 
 	// go utils.SendMail(user.Email, fmt.Sprintf("Some on logged in to your account at %v", time.Now()), "Login Verification")
 
-	utils.ResponseJson(w, http.StatusOK, utils.MapLoginUser(user))
+	utils.ResponseJson(w, http.StatusOK, utils.MapLoginUser(user, jwtToken))
 }
