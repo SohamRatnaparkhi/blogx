@@ -1,6 +1,6 @@
 # blogx-backend-go
 
-Microservice based backend for a micro-blogging platform.
+Microservice based backend and Next.js frontend for a micro-blogging platform.
 
 It offers four distinct API services that collectively enable various functionalities:
 
@@ -18,6 +18,8 @@ Try this API service in postman.
 
 ### Code-base Setup
 
+#### a) Backend setup
+
 1. Each folder of the root directory in the codebase contains an `.env.example` file. Follow the steps below to set up the necessary environment variables:
 
 * Create a file named .env in each folder.
@@ -33,6 +35,19 @@ Try this API service in postman.
 * Run the command `docker compose up`.
 
 > **Note**: The `docker compose up` command will automatically set up the database. However, if it fails, please refer to the "*DB-Setup*" section for further instructions.
+
+#### b) Frontend setup
+
+Frontend is a Next.js 13.x application bootsrapped by `create-next-app`
+
+After cloning the project:
+
+* cd ./frontend
+* npm i
+* cp ./env.local.example ./env.local
+* npm run dev
+
+Navigate to http://localhost:3000 to access the frontend of this project.
 
 ### DB-Setup
 
@@ -125,8 +140,9 @@ Database used - PostgreSQL
 ## Tools and Technologies used
 
 1. Go
-2. PostgreSQL
-3. Redis
-4. Docker and Docker-compose
-5. HAProxy (load-balancer)
-6. SwaggerUI
+2. Next.js (Type-script)
+3. PostgreSQL
+4. Redis
+5. Docker and Docker-compose
+6. HAProxy (load-balancer)
+7. SwaggerUI
