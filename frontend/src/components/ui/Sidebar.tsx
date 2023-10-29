@@ -9,8 +9,10 @@ import { SidebarOptions, SidebarMap } from '@/constants/sidebar.constants';
 import SidebarOption from './SidebarOptions';
 
 const Sidebar = () => {
-
-    const path = usePathname()
+    const possiblePath = usePathname().split("/").reverse()
+    const path = "/" + (possiblePath.length > 2 ? possiblePath[1] : possiblePath[0])
+    // console.log(possiblePath)
+    // console.log(path)
     const { items, routes } = SidebarOptions
     const [selected, setSelected] = React.useState<string>(SidebarMap[path])
     useEffect(() => {
