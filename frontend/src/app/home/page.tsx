@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import { cookies } from 'next/headers'
-import Link from 'next/link'
-import Output from '@/components/posts/Output'
+import ViewBlog from '@/components/posts/ViewBlog'
 
 const Feed = async () => {
   const cookieStore = cookies()
@@ -13,7 +12,6 @@ const Feed = async () => {
       'Authorization': token,
     },
   })
-  // console.log(data.blog)
   const parseBlogBody = (body: string) => {
     try {
       const blogBody = JSON.parse(body)
@@ -24,7 +22,7 @@ const Feed = async () => {
       }
     }
   }
-  const blogs: { [key: string]: { title: string, body: any, description?: any } } = {};
+  const blogs: { [key: string]: BlogView } = {};
   data.blog?.forEach((blog: any, i: number) => {
     const body = blog.body
     const parsedBlog = parseBlogBody(body)
@@ -35,26 +33,27 @@ const Feed = async () => {
       title: blog.title,
       body: parsedBlog.mdx,
       description: parsedBlog.description,
+      image: parsedBlog.image || '/blog_default_banner.jpg',
+      id: blog.id,
+      likes: blog.likes,
+      createdAt: new Date(blog.created_at?.split(" ")[0]).toDateString(),
+      tags: blog.tags,
+      views: blog.views,
+      author: blog.author_id,
     }
   })
   return (
-    <div>
-      {
-        //display blogs
-        Object.keys(blogs).map((key: string, i: number) => {
-          return (
-            <div key={i}>
-              <Link href={`/view/${key}`}>
-                <h1>{blogs[key].title}</h1>
-              </Link>
-              <div className='text-left text-lg' key={i}>
-                <p>{blogs[key].description}</p>
-                <Output mdString={blogs[key].body} title={blogs[key].title} />
-              </div>
-            </div>
-          )
-        })
-      }
+    <div className='container mx-auto flex flex-wrap my-5 w-full h-fit max-h-1/3 p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 overflow-y-auto'>
+      <section className='w-full flex flex-col items-center'>
+        {
+          //display blogs
+          Object.keys(blogs).map((key: string, i: number) => {
+            return (
+              <ViewBlog key={i} blog={blogs[key]} isShort={true} />
+            )
+          })
+        }
+      </section>
     </div>
   )
 }

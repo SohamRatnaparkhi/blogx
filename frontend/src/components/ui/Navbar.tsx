@@ -5,24 +5,17 @@ import { CiUser } from "react-icons/ci";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { usePathname } from "next/navigation";
+import Sidebar from "./Sidebar";
+import Widgets from "../posts/Widgets";
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
     const [color, setColor] = useState("#0e121e");
     const [textColor, setTextColor] = useState("white");
 
-    const asPath = usePathname();
-    const page = asPath.split("/")[1];
-    const mapping :{
-        [key: string]: string;
-    } = {
-        "": "Home",
-        profile: "Profile",
-        "user-profile": "Profile",
-        bcblogspage: "Blockchain Blogs",
-        BlogPage: "Publish Blogs",
-        settingsPage: "Settings",
-    };
+    const possiblePath = usePathname().split("/").reverse()
+    const path = "/" + (possiblePath.length > 2 ? possiblePath[1] : possiblePath[0])
+
 
     const handleNav = () => {
         setNav(!nav);
@@ -69,11 +62,6 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="hidden sm:flex p-4 basis-1/2 justify-between">
-                    <div className="">
-                        <div className="cursor-pointer text-xl flex items-center hover:border border-gray-500 rounded-[0.4rem] p-1 group ">
-                            {mapping[page]}
-                        </div>
-                    </div>
                     <div className="cursor-pointer flex items-center hover:border border-gray-500 rounded-[0.4rem] p-1 px-3 mx-4 group">
                         <CiUser className="w-[1.5rem] h-[1.5rem] lg:w-[1.2rem] hover:h-[1.2rem] text-gray-500 " />
                         <MdKeyboardArrowDown className="group-hover:w-[1rem]  group-hover:h-[1rem] text-gray-500" />
@@ -92,55 +80,13 @@ const Navbar = () => {
                 <div
                     className={
                         nav
-                            ? "lg:hidden absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-screen bg-[] text-center ease-in duration-300"
-                            : "lg:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-full h-screen bg-[] text-center ease-in duration-300"
+                            ? "z-10 lg:hidden absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-center items-center w-1/3 h-screen bg-[#192734] text-center ease-in duration-300"
+                            : "lg:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-3/4 h-screen bg-[] text-center ease-in duration-300"
                     }
                 >
-                    <ul>
-                        <li
-                            onClick={handleNav}
-                            className="p-4 text-4xl hover:text-gray-500"
-                        >
-                            <Link href="/">Home</Link>
-                        </li>
-                        <li
-                            onClick={handleNav}
-                            className="p-4 text-4xl hover:text-gray-500"
-                        >
-                            <Link href="/walletTransfer">Transfer tokens</Link>
-                        </li>
-                        <li
-                            onClick={handleNav}
-                            className="p-4 text-4xl hover:text-gray-500"
-                        >
-                            <Link href="/bcblogspage">Blockchain feed</Link>
-                        </li>
-                        <li
-                            onClick={handleNav}
-                            className="p-4 text-4xl hover:text-gray-500"
-                        >
-                            <Link href="/profile">Profile</Link>
-                        </li>
-                        {/* <li
-              onClick={handleNav}
-              className="p-4 text-4xl hover:text-gray-500"
-            >
-              <div className="flex items-center bg-[#243340] p-2 rounded-3xl">
-                <BiSearch className="text-[#8899a6] mr-2" />
-                <input
-                  placeholder="Search Blog-X"
-                  type="text"
-                  className="bg-transparent outline-none"
-                />
-              </div>
-            </li> */}
-                        <li
-                            onClick={handleNav}
-                            className="p-4 text-4xl hover:text-gray-500"
-                        >
-                            <Link href="/contact">Contact Us </Link>
-                        </li>
-                    </ul>
+                    {path == '/post' && <Widgets />}
+                    <br />
+                    <Sidebar />
                 </div>
             </div>
         </div>

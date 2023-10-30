@@ -1,9 +1,10 @@
 import Output from '@/components/posts/Output'
+import ViewBlog from '@/components/posts/ViewBlog'
 import axios from 'axios'
 import { cookies } from 'next/headers'
 import React from 'react'
 
-const ViewBlog = async ({ params }: {
+const FullViewBlog = async ({ params }: {
     params: {
         postId: string
     }
@@ -23,30 +24,45 @@ const ViewBlog = async ({ params }: {
             return blogBody
         } catch (error) {
             return {
-                
+
             }
         }
     }
 
     const { blog } = data
-    const parsedBlog: { [key: string]: { title: string, body: any, description?: any } } = {};
-    const body = blog.body
+    const blogs: { [key: string]: BlogView } = {};
+    const body = blog?.body
+    const parsedBlog = parseBlogBody(body)
+    if (parsedBlog.mdx == undefined || parsedBlog.mdx == null || parsedBlog.mdx == '') {
+        return
+    }
     parsedBlog[blog.id] = {
         title: blog.title,
-        body: parseBlogBody(body).mdx,
-        description: parseBlogBody(body).description,
+        body: parsedBlog.mdx,
+        description: parsedBlog.description,
+        image: parsedBlog.image || '/blog_default_banner.jpg',
+        id: blog.id,
+        likes: blog.likes,
+        createdAt: new Date(blog.created_at?.split(" ")[0]).toDateString(),
+        tags: blog.tags,
+        views: blog.views,
+        author: blog.author_id,
     }
     return (
         <div>
             <div>
-                <h1>{parsedBlog[blog.id].title}</h1>
-                <div className='text-left text-lg'>
-                    <p>{parsedBlog[blog.id].description}</p>
-                    <Output mdString={parsedBlog[blog.id].body} title={parsedBlog[blog.id].title} />
+                <div className="flex flex-col items-center py-12">
+                    <a className="font-bold text-white-800 uppercase hover:text-white-700 text-5xl" href="#">
+                        {parsedBlog[blog.id].title}
+                    </a>
+                    <p className="text-lg pt-5 mt-2 text-white-600">
+                        {parsedBlog[blog.id].description}
+                    </p>
                 </div>
+                <ViewBlog blog={parsedBlog[blog.id]} />
             </div>
         </div>
     )
 }
 
-export default ViewBlog
+export default FullViewBlog
