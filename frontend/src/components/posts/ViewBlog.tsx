@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FcLike } from 'react-icons/fc'
 import { AiOutlineEye } from 'react-icons/ai'
 import Output from './Output'
+import { FaArrowRight } from 'react-icons/fa'
 
 const ViewBlog = ({
     blog,
@@ -15,7 +16,7 @@ const ViewBlog = ({
     return (
         <article className={`flex flex-col ${isShort ? 'w-3/4' : 'w-full'} mx-auto shadow my-2 text-black`}>
             <div className="hover:opacity-75">
-                {isShort ? 
+                {isShort ?
                     <Image src={blog.image} alt="Blog Post illustration" width={1200} height={500} />
                     :
                     <Image src={blog.image} alt="Blog Post illustration" width={1500} height={500} />
@@ -37,7 +38,9 @@ const ViewBlog = ({
                 {
                     !isShort && <Output mdString={blog.body} title={blog.title} />
                 }
-                {isShort && <Link href={`/view/${blog.id}`} className="uppercase text-gray-800 hover:text-black">Continue Reading <i className="fas fa-arrow-right"></i></Link>}
+                {isShort && (<div className='flex flex-row gap-2 items-center text-center mx-auto'>
+                    <Link href={`/view/${blog.id}`} className="uppercase text-gray-800 hover:text-black"> <pre>Continue Reading</pre></Link> <FaArrowRight />
+                </div>)}
                 <div className='flex flex-row gap-2'>
                     <FcLike className='w-6 h-6' />
                     <p>{blog.likes}</p>

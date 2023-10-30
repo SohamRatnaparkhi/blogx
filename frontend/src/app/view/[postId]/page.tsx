@@ -1,4 +1,3 @@
-import Output from '@/components/posts/Output'
 import ViewBlog from '@/components/posts/ViewBlog'
 import axios from 'axios'
 import { cookies } from 'next/headers'
