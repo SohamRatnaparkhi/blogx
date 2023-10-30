@@ -13,3 +13,16 @@ declare interface Blog {
     "views": number;
     "likes": number;
 }
+
+declare interface BlogView {
+    "id": string;
+    "title": string;
+    "description": string;
+    "body": string;
+    "createdAt": !string;
+    "views": !number;
+    "likes": !number;
+    "tags": !string[];
+    "image": string;
+    "author": string;
+}

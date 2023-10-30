@@ -36,3 +36,20 @@ export const getBlog = async (token: string, id: string) => {
         }
     })
 }
+
+export const getMyBlogs = async (token: string) => {
+    const serverUrl = process.env.GO_SERVER_URL;
+    if (!serverUrl) {
+        throw new Error("No server URL");
+    }
+    const { feed } = ROUTES;
+    const endpoint = serverUrl + feed.url + feed.routes.myPosts;
+    if (!token || token == "" || token == "null") {
+        throw new Error("No token");
+    }
+    return await axios.get(endpoint, {
+        headers: {
+            'auth_token': token
+        }
+    })
+}

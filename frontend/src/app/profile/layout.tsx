@@ -1,6 +1,5 @@
 import Navbar from '@/components/ui/Navbar';
 import Sidebar from '@/components/ui/Sidebar';
-import SidebarTabs from '@/components/ui/SidebarTabs';
 import React from 'react'
 
 const layout = ({
@@ -33,7 +32,7 @@ const layout = ({
                             {children}
                         </div>
                         <div className={styles.rightSide}>
-                            <SidebarTabs />
+                            <Sidebar />
                         </div>
                     </div>
                 </div>
