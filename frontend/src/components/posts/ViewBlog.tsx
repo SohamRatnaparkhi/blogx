@@ -16,7 +16,7 @@ const ViewBlog = ({
         <article className={`flex flex-col ${isShort ? 'w-3/4' : 'w-full'} mx-auto shadow my-2 text-black`}>
             <div className="hover:opacity-75">
                 {isShort ? 
-                    <Image src={blog.image} alt="Blog Post illustration" width={1000} height={500} />
+                    <Image src={blog.image} alt="Blog Post illustration" width={1200} height={500} />
                     :
                     <Image src={blog.image} alt="Blog Post illustration" width={1500} height={500} />
                 }
