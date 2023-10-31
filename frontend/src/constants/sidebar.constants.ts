@@ -1,5 +1,5 @@
-const sidebarItems = ['Home', 'Post', 'View', 'Profile', 'Log-out']
-const sidebarRoutes = ['/home', '/post', '/view', '/profile']
+const sidebarItems = ['Home', 'Post', 'View', 'Profile', 'Settings', 'Log-out']
+const sidebarRoutes = ['/home', '/post', '/view', '/profile', '/settings', '/']
 
 export const SidebarMap :{
     [key: string]: string
@@ -8,6 +8,7 @@ export const SidebarMap :{
     '/post': 'Post',
     '/view': 'View',
     '/profile': 'Profile',
+    '/settings': 'Settings',
     '/': 'Log-out'
 }
 
