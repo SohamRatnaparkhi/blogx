@@ -3,20 +3,16 @@ import axios from 'axios'
 import { cookies } from 'next/headers'
 import React from 'react'
 
-const FullViewBlog = async ({ params }: {
-    params: {
-        postId: string
-    }
-}) => {
+const LastBlogView = async () => {
     const cookieStore = cookies()
     const token = cookieStore.get('auth_token')?.value
+    const postId = cookieStore.get('last_post')?.value
     const serverUrl = process.env.NEXT_JS_SERVER_URL
-    const { data } = await axios.get(serverUrl + '/api/blog/query/postWithId/' + params.postId, {
+    const { data } = await axios.get(serverUrl + '/api/blog/query/postWithId/' + postId, {
         headers: {
             'Authorization': token,
         },
     })
-
     const parseBlogBody = (body: string) => {
         try {
             const blogBody = JSON.parse(body)
@@ -27,7 +23,6 @@ const FullViewBlog = async ({ params }: {
             }
         }
     }
-
     const { blog } = data
     const blogs: { [key: string]: BlogView } = {};
     const body = blog?.body
@@ -64,4 +59,4 @@ const FullViewBlog = async ({ params }: {
     )
 }
 
-export default FullViewBlog
+export default LastBlogView

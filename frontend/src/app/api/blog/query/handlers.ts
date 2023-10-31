@@ -25,6 +25,7 @@ export const getBlog = async (token: string, id: string) => {
     if (!serverUrl) {
         throw new Error("No server URL");
     }
+
     const { feed } = ROUTES;
     const endpoint = serverUrl + feed.url + feed.routes.postWithId + id;
     if (!token || token == "" || token == "null") {
