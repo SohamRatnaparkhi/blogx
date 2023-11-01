@@ -29,6 +29,16 @@ export const FEED_ROUTES = {
     "likedPosts": "/myLikedPosts",
 }
 
+export const USER_ROUTES = {
+    "delete": "/delete",
+    "follow": "/follow/toFollowId=",
+    "unfollow": "/unfollow/toUnfollowId=",
+    "updateBio": "/update/bio",
+    "updatePassword": "/update/password",
+    "getById": "/get",
+    "getByEmail": "/get/email",
+}
+
 export const ROUTES = {
     "auth": {
         routes: AUTH_ROUTES,
@@ -42,4 +52,8 @@ export const ROUTES = {
         routes: FEED_ROUTES,
         url: FEED_SERVER
     },
+    "user": {
+        routes: USER_ROUTES,
+        url: USER_SERVER
+    }
 }

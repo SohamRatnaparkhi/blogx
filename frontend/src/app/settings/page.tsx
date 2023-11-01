@@ -1,11 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
 
 const SettingsPage = () => {
     const [bio, setBio] = React.useState<string>("")
     const [timezone, setTimezone] = React.useState<string>("")
     const [lang, setLang] = React.useState<string>("")
+    useEffect(() => {
+        const getUserDetails = async () => {
+            const { data } = await axios.get('/api/user/me', {
+                headers: {
+                    'Authorization': localStorage.getItem('token'),
+                },
+            })
+            console.log(data)
+        }
+        getUserDetails()
+    }, [])
     return (
         <div>
             <div className="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
