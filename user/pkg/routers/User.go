@@ -13,5 +13,9 @@ func SetUserRouter() chi.Router {
 	userRouter.Delete("/delete", middleware.Auth(middleware.AuthHandler(users.DeleteUser)))
 	userRouter.Post("/follow", middleware.Auth(middleware.AuthHandler(users.FollowUser)))
 	userRouter.Post("/unfollow", middleware.Auth(middleware.AuthHandler(users.UnFollowUser)))
+	userRouter.Post("/update/bio", middleware.Auth(middleware.AuthHandler(users.UpdateUserBio)))
+	userRouter.Post("/update/password", middleware.Auth(middleware.AuthHandler(users.UpdateUserPassword)))
+	userRouter.Get("/get", middleware.Auth(middleware.AuthHandler(users.GetUserByID)))
+	userRouter.Get("/get/email", middleware.Auth(middleware.AuthHandler(users.GetUserByEmail)))
 	return userRouter
 }

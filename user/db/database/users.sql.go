@@ -90,3 +90,69 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 	)
 	return i, err
 }
+
+const getUserByID = `-- name: GetUserByID :one
+SELECT id, first_name, last_name, email, bio, password, isadmin, created_at, updated_at FROM users WHERE id = $1
+`
+
+func (q *Queries) GetUserByID(ctx context.Context, id uuid.UUID) (User, error) {
+	row := q.db.QueryRowContext(ctx, getUserByID, id)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.Bio,
+		&i.Password,
+		&i.Isadmin,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const updateUserBio = `-- name: UpdateUserBio :exec
+UPDATE users SET bio = $1 WHERE id = $2
+`
+
+func (q *Queries) UpdateUserBio(ctx context.Context, bio sql.NullString, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, updateUserBio, bio, id)
+	return err
+}
+
+const updateUserEmail = `-- name: UpdateUserEmail :exec
+UPDATE users SET email = $1 WHERE id = $2
+`
+
+func (q *Queries) UpdateUserEmail(ctx context.Context, email string, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, updateUserEmail, email, id)
+	return err
+}
+
+const updateUserFirstName = `-- name: UpdateUserFirstName :exec
+UPDATE users SET first_name = $1 WHERE id = $2
+`
+
+func (q *Queries) UpdateUserFirstName(ctx context.Context, firstName string, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, updateUserFirstName, firstName, id)
+	return err
+}
+
+const updateUserLastName = `-- name: UpdateUserLastName :exec
+UPDATE users SET last_name = $1 WHERE id = $2
+`
+
+func (q *Queries) UpdateUserLastName(ctx context.Context, lastName string, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, updateUserLastName, lastName, id)
+	return err
+}
+
+const updateUserPassword = `-- name: UpdateUserPassword :exec
+UPDATE users SET password = $1 WHERE id = $2 && email = $3
+`
+
+func (q *Queries) UpdateUserPassword(ctx context.Context, password string, id uuid.UUID, email string) error {
+	_, err := q.db.ExecContext(ctx, updateUserPassword, password, id, email)
+	return err
+}

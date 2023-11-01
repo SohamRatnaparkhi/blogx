@@ -47,7 +47,7 @@ const Feed = async () => {
       <section className='w-full flex flex-col items-center'>
         {
           //display blogs
-          Object.keys(blogs).map((key: string, i: number) => {
+          Object.keys(blogs).reverse().map((key: string, i: number) => {
             return (
               <ViewBlog key={i} blog={blogs[key]} isShort={true} />
             )

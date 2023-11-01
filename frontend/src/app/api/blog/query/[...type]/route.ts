@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { allBlogs, getBlog, getMyBlogs } from "../handlers";
+import { cookies } from "next/headers";
 
 const request = async (request: NextRequest) => {
     const possibleTypes = ['allBlogs', 'postWithId', 'myPosts'];
@@ -33,8 +34,19 @@ const request = async (request: NextRequest) => {
     }
     else if (type == 'postWithId') {
         try {
-            const id = request.url.split('/').reverse()[0];
+            let id = request.url.split('/').reverse()[0];
+            const cookieStore = cookies()
+            if (id == "undefined" || id == "" || id == undefined) {
+                console.log("in")
+                id = cookieStore.get('last_post')?.value || "";
+            }
+            console.log("id=" + id)
             const {data, status, statusText} = await getBlog(token, id);
+            console.log(data.id)
+            cookieStore.set('last_post', data.id, {
+                expires: new Date(Date.now() + 3000000),
+                path: '/',
+            })
             // console.log(data)
             if (status - 400 < 0) {
                 return NextResponse.json({

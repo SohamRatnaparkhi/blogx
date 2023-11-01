@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from 'react'
-import { AiOutlineHome } from 'react-icons/ai'
+import { AiFillSetting, AiOutlineHome } from 'react-icons/ai'
 import { FaRegListAlt } from 'react-icons/fa'
 import { BiMoneyWithdraw } from 'react-icons/bi'
 import { AiOutlinePhone } from 'react-icons/ai'
@@ -71,6 +71,13 @@ const Sidebar = () => {
                         isActive={Boolean(selected === items[3])}
                         setSelected={setSelected}
                         redirect={routes[3]}
+                    />
+                    <SidebarOption
+                        option={items[4]}
+                        Icon={AiFillSetting}
+                        isActive={Boolean(selected === items[4])}
+                        setSelected={setSelected}
+                        redirect={routes[4]}
                     />
                     <hr />
                 </div>

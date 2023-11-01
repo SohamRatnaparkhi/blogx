@@ -80,7 +80,7 @@ const Navbar = () => {
                 <div
                     className={
                         nav
-                            ? "z-10 lg:hidden absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-center items-center w-1/3 h-screen bg-[#192734] text-center ease-in duration-300"
+                            ? "z-10 lg:hidden absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-center items-center w-3/4 h-screen bg-[#192734] text-center ease-in duration-300"
                             : "lg:hidden absolute top-0 left-[-100%] right-0 bottom-0 flex justify-center items-center w-3/4 h-screen bg-[] text-center ease-in duration-300"
                     }
                 >
