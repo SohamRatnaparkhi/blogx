@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: api-blog
-  name: api_blog
+  name: api-blog
 spec:
   ports:
     - name: "8081"

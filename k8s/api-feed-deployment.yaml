@@ -46,7 +46,7 @@ spec:
               value: "8082"
             - name: POSTGRES_PASSWORD
               value: foobarbaz
-          image: api-feed
+          image: sohamkr/blogx_feed:0.0
           name: feed
           ports:
             - containerPort: 8082

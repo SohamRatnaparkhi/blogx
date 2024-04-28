@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: api-auth
-  name: api_auth
+  name: api-auth
 spec:
   ports:
     - name: "8080"

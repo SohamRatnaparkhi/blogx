@@ -1,0 +1,21 @@
+kubectl apply -f k8s/api_auth-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/api-auth-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/api_blog-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/api-blog-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/api_feed-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/api-feed-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/api_user-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/api-user-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/haproxy-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/haproxy-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/haproxy-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/pg-data-blogx-persistentvolumeclaim.yaml --namespace blogx-cc
+kubectl apply -f k8s/postgres-claim1-persistentvolumeclaim.yaml --namespace blogx-cc
+kubectl apply -f k8s/blogx-backend-go-default-networkpolicy.yaml --namespace blogx-cc
+kubectl apply -f k8s/postgres-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/postgres-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/redis-deployment.yaml --namespace blogx-cc
+kubectl apply -f k8s/redis-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/swagger_ui-service.yaml --namespace blogx-cc
+kubectl apply -f k8s/swagger_ui-deployment.yaml --namespace blogx-cc
+

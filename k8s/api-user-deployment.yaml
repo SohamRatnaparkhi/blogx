@@ -46,7 +46,7 @@ spec:
               value: "8083"
             - name: POSTGRES_PASSWORD
               value: foobarbaz
-          image: api-user
+          image: sohamkr/blogx_user:0.1
           name: user
           ports:
             - containerPort: 8083

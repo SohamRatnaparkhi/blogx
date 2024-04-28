@@ -48,7 +48,7 @@ spec:
               value: blogx_db
             - name: POSTGRES_PASSWORD
               value: foobarbaz
-          image: api-auth
+          image: sohamkr/blogx_auth:0.0
           name: auth
           ports:
             - containerPort: 8080

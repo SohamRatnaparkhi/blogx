@@ -25,7 +25,7 @@ spec:
         io.kompose.service: haproxy
     spec:
       containers:
-        - image: haproxy
+        - image: sohamkr/blogx_haproxy:0.0
           name: haproxy
           ports:
             - containerPort: 80

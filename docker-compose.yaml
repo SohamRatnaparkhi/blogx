@@ -26,9 +26,10 @@ services:
     ports:
       - '8000:80'
     restart: always
-    build:
-      context: ./haproxy/
-      dockerfile: Dockerfile
+    image: sohamkr/blogx_haproxy:0.0
+    # build:
+    #   context: ./haproxy/
+    #   dockerfile: Dockerfile
   api_auth:
     container_name: auth
     network_mode: my-network
@@ -49,10 +50,10 @@ services:
     restart: always
     links:
       - postgres
-    image: 'api-auth'
-    build:
-      context: ./authentication/
-      dockerfile: Dockerfile
+    image: 'sohamkr/blogx_auth:0.0'
+    # build:
+    #   context: ./authentication/
+    #   dockerfile: Dockerfile
   api_blog:
     container_name: blog
     network_mode: my-network
@@ -72,10 +73,10 @@ services:
     restart: always
     links:
       - postgres
-    image: 'api-blog'
-    build:
-      context: ./blog/
-      dockerfile: Dockerfile
+    image: 'sohamkr/blogx_blog:0.0'
+    # build:
+      # context: ./blog/
+      # dockerfile: Dockerfile
   api_feed:
     container_name: feed
     network_mode: my-network
@@ -95,10 +96,10 @@ services:
     restart: always
     links:
       - postgres
-    image: 'api-feed'
-    build:
-      context: ./feed/
-      dockerfile: Dockerfile
+    image: 'sohamkr/blogx_feed:0.0'
+    # build:
+      # context: ./feed/
+      # dockerfile: Dockerfile
   api_user:
     container_name: user
     network_mode: my-network
@@ -118,20 +119,20 @@ services:
     restart: always
     links:
       - postgres
-    image: 'api-user'
-    build:
-      context: ./user/
-      dockerfile: Dockerfile
+    image: 'sohamkr/blogx_user:0.1'
+    # build:
+      # context: ./user/
+      # dockerfile: Dockerfile
   swagger_ui:
     container_name: swagger
     network_mode: my-network
     ports:
       - '8084:8084'
     restart: always
-    image: 'swagger-ui'
-    build:
-      context: ./swagger/
-      dockerfile: Dockerfile
+    image: 'sohamkr/blogx_swagger:0.0'
+    # build:
+      # context: ./swagger/
+      # dockerfile: Dockerfile
 volumes:
   pg_data_blogx:
 networks:
