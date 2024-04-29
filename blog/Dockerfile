@@ -48,5 +48,4 @@ COPY --from=build-production /app/.env .env
 # Use nonroot user
 USER nonroot
 
-
 CMD ["./blog"]

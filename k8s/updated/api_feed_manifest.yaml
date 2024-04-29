@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-feed
+  namespace: blogx-cc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-feed
+  template:
+    metadata:
+      labels:
+        app: api-feed
+    spec:
+      containers:
+      - name: api-feed
+        image: sohamkr/blogx_feed:0.0
+        env:
+        - name: POSTGRES_DB
+          value: blogx_db
+        - name: POSTGRES_PASSWORD
+          value: foobarbaz
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          value: postgres
+        - name: DB_PASSWORD
+          value: foobarbaz
+        - name: DB_NAME
+          value: blogx_db
+        - name: PORT
+          value: "8082"
+        - name: JWT_SECRET_KEY
+          value: blogx_secret_key
+        - name: BCRYPT_SALT_VALUE
+          value: "12"
+        - name: DB_URL
+          value: "postgres://postgres.roharsahwtuwaclsianl:mT5iappOoDza077K@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
+        ports:
+        - containerPort: 8082
+        resources:
+          requests:
+            cpu: "250m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-feed
+  namespace: blogx-cc
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8082
+    targetPort: 8082
+  selector:
+    app: api-feed
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-feed-hpa
+  namespace: blogx-cc
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-feed
+  minReplicas: 2
+  maxReplicas: 6
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 15
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70

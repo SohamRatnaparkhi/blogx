@@ -11,16 +11,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 ######################
 FROM build-base AS dev
 
-RUN go install github.com/mitranim/gow@latest
-
-# ENV PORT=8080
-# ENV BCRYPT_SALT_VALUE=12
-# ENV JWT_SECRET_KEY="blogx_secret_key"
-# ENV DB_URL="postgres://postgres:Soham@123*@localhost:5432/blogx_service_go"
-
 COPY . .
-
-CMD [ "gow", "run", "." ]
 
 ######################
 FROM build-base AS build-production
@@ -33,7 +24,6 @@ COPY . .
 ENV PORT=8080
 ENV BCRYPT_SALT_VALUE=12
 ENV JWT_SECRET_KEY="blogx_secret_key"
-# ENV DB_URL="postgres://postgres:Soham@123*@localhost:5432/blogx_service_go"
 
 RUN go build \
     -ldflags="-linkmode external -extldflags -static" \
@@ -41,7 +31,7 @@ RUN go build \
     -o  main
 
 
-
+######################
 FROM scratch
 
 EXPOSE 8080
@@ -59,6 +49,5 @@ COPY --from=build-production /app/.env .env
 
 # Use nonroot user
 USER nonroot
-
 
 CMD ["./main"]

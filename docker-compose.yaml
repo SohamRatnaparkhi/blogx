@@ -20,6 +20,7 @@ services:
       - '6379:6379'
     restart: always
     image: 'redis:7-alpine'
+
   haproxy:
     container_name: haproxy
     network_mode: my-network
